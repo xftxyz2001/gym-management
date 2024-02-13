@@ -11,11 +11,32 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 13/02/2024 17:49:18
+ Date: 14/02/2024 07:05:40
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+  `id` bigint NOT NULL COMMENT '管理员ID',
+  `login` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '登录名',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '登录密码',
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '姓名',
+  `detail` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '管理员信息' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES (1, 'admin', 'admin', '管理员', NULL, '2024-02-14 07:05:24', '2024-02-14 07:05:24', 0);
 
 -- ----------------------------
 -- Table structure for card
@@ -36,6 +57,10 @@ CREATE TABLE `card`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员卡信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of card
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for card_type
 -- ----------------------------
 DROP TABLE IF EXISTS `card_type`;
@@ -52,6 +77,10 @@ CREATE TABLE `card_type`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '卡类型信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of card_type
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for coach
 -- ----------------------------
 DROP TABLE IF EXISTS `coach`;
@@ -65,6 +94,10 @@ CREATE TABLE `coach`  (
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '教练信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of coach
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for consume
@@ -85,6 +118,10 @@ CREATE TABLE `consume`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消费记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of consume
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for course
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
@@ -101,6 +138,10 @@ CREATE TABLE `course`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of course
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for exchange
 -- ----------------------------
 DROP TABLE IF EXISTS `exchange`;
@@ -114,6 +155,10 @@ CREATE TABLE `exchange`  (
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '积分兑换记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of exchange
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for member
@@ -137,6 +182,10 @@ CREATE TABLE `member`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of member
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for project
 -- ----------------------------
 DROP TABLE IF EXISTS `project`;
@@ -149,6 +198,10 @@ CREATE TABLE `project`  (
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '项目信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of project
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for refund
@@ -166,6 +219,10 @@ CREATE TABLE `refund`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '退款记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of refund
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for reward
 -- ----------------------------
 DROP TABLE IF EXISTS `reward`;
@@ -178,5 +235,9 @@ CREATE TABLE `reward`  (
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '奖励信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of reward
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

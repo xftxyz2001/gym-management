@@ -9,35 +9,53 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 教练信息
- * @TableName coach
+ * 会员卡信息
+ * @TableName card
  */
-@TableName(value ="coach")
+@TableName(value ="card")
 @Data
-public class Coach implements Serializable {
+public class Card implements Serializable {
     /**
-     * 教练ID
+     * 卡ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 教练姓名
+     * 所属会员ID
      */
-    @TableField(value = "name")
-    private String name;
+    @TableField(value = "member_id")
+    private Long memberId;
 
     /**
-     * 教练联系方式
+     * 卡类型ID
      */
-    @TableField(value = "contact")
-    private String contact;
+    @TableField(value = "card_type")
+    private Long cardType;
 
     /**
-     * 教练技能描述
+     * 有效期
      */
-    @TableField(value = "skill")
-    private String skill;
+    @TableField(value = "valid_time")
+    private Date validTime;
+
+    /**
+     * 总次数/金额（-1无效）
+     */
+    @TableField(value = "total")
+    private Integer total;
+
+    /**
+     * 剩余次数/金额
+     */
+    @TableField(value = "remain")
+    private Integer remain;
+
+    /**
+     * 状态（0正常、1过期、-1注销）
+     */
+    @TableField(value = "status")
+    private Integer status;
 
     /**
      * 创建时间

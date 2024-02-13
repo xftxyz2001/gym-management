@@ -5,39 +5,76 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
 /**
- * 教练信息
- * @TableName coach
+ * 会员信息
+ * @TableName member
  */
-@TableName(value ="coach")
+@TableName(value ="member")
 @Data
-public class Coach implements Serializable {
+public class Member implements Serializable {
     /**
-     * 教练ID
+     * 会员ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 教练姓名
+     * 会员姓名
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 教练联系方式
+     * 性别
+     */
+    @TableField(value = "gender")
+    private Integer gender;
+
+    /**
+     * 出生日期
+     */
+    @TableField(value = "birthday")
+    private Date birthday;
+
+    /**
+     * 身高
+     */
+    @TableField(value = "height")
+    private BigDecimal height;
+
+    /**
+     * 体重
+     */
+    @TableField(value = "weight")
+    private BigDecimal weight;
+
+    /**
+     * 体型
+     */
+    @TableField(value = "body_type")
+    private String bodyType;
+
+    /**
+     * 联系方式
      */
     @TableField(value = "contact")
     private String contact;
 
     /**
-     * 教练技能描述
+     * 地址
      */
-    @TableField(value = "skill")
-    private String skill;
+    @TableField(value = "address")
+    private String address;
+
+    /**
+     * 积分
+     */
+    @TableField(value = "points")
+    private Integer points;
 
     /**
      * 创建时间

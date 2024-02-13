@@ -9,35 +9,29 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 教练信息
- * @TableName coach
+ * 项目信息
+ * @TableName project
  */
-@TableName(value ="coach")
+@TableName(value ="project")
 @Data
-public class Coach implements Serializable {
+public class Project implements Serializable {
     /**
-     * 教练ID
+     * 项目ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 教练姓名
+     * 项目名称
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 教练联系方式
+     * 项目描述
      */
-    @TableField(value = "contact")
-    private String contact;
-
-    /**
-     * 教练技能描述
-     */
-    @TableField(value = "skill")
-    private String skill;
+    @TableField(value = "description")
+    private String description;
 
     /**
      * 创建时间

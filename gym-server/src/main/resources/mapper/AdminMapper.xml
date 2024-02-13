@@ -2,21 +2,22 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xftxyz.gymadmin.mapper.CoachMapper">
+<mapper namespace="com.xftxyz.gymadmin.mapper.AdminMapper">
 
-    <resultMap id="BaseResultMap" type="com.xftxyz.gymadmin.domain.Coach">
+    <resultMap id="BaseResultMap" type="com.xftxyz.gymadmin.domain.Admin">
             <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="login" column="login" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="contact" column="contact" jdbcType="VARCHAR"/>
-            <result property="skill" column="skill" jdbcType="VARCHAR"/>
+            <result property="detail" column="detail" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,contact,
-        skill,create_time,update_time,
-        is_deleted
+        id,login,password,
+        name,detail,create_time,
+        update_time,is_deleted
     </sql>
 </mapper>

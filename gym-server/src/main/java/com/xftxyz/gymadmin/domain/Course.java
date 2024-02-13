@@ -5,39 +5,46 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
 /**
- * 教练信息
- * @TableName coach
+ * 课程信息
+ * @TableName course
  */
-@TableName(value ="coach")
+@TableName(value ="course")
 @Data
-public class Coach implements Serializable {
+public class Course implements Serializable {
     /**
-     * 教练ID
+     * 课程ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 教练姓名
+     * 课程名称
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 教练联系方式
+     * 教练ID
      */
-    @TableField(value = "contact")
-    private String contact;
+    @TableField(value = "coach_id")
+    private Long coachId;
 
     /**
-     * 教练技能描述
+     * 课程时长
      */
-    @TableField(value = "skill")
-    private String skill;
+    @TableField(value = "duration")
+    private Date duration;
+
+    /**
+     * 课程价格
+     */
+    @TableField(value = "price")
+    private BigDecimal price;
 
     /**
      * 创建时间

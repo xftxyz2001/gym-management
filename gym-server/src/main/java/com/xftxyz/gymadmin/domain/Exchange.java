@@ -9,35 +9,35 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 教练信息
- * @TableName coach
+ * 积分兑换记录
+ * @TableName exchange
  */
-@TableName(value ="coach")
+@TableName(value ="exchange")
 @Data
-public class Coach implements Serializable {
+public class Exchange implements Serializable {
     /**
-     * 教练ID
+     * 兑换记录ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 教练姓名
+     * 会员ID
+     */
+    @TableField(value = "member_id")
+    private Long memberId;
+
+    /**
+     * 兑换物品名称
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 教练联系方式
+     * 兑换消耗积分
      */
-    @TableField(value = "contact")
-    private String contact;
-
-    /**
-     * 教练技能描述
-     */
-    @TableField(value = "skill")
-    private String skill;
+    @TableField(value = "points")
+    private Integer points;
 
     /**
      * 创建时间
