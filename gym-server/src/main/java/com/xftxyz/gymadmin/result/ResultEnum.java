@@ -11,6 +11,8 @@ public enum ResultEnum {
     FAILED(-1, "失败"), // 失败
     SUCCESS(0, "成功"), // 成功
 
+    LOGIN_ERROR(100, "登录失败，请检查用户名和密码"), // 登录失败
+
     // 4参数错误
     PARAM_ERROR(400, "非法参数"),
     PARAM_VALID_ERROR(401, "参数校验失败"),

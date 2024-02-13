@@ -14,10 +14,10 @@ export default defineComponent({
   },
   setup() {
     const list = ref([
-      { id: 1, name: "注册用户", data: "0", color: "#4e73df", icon: "sfont system-yonghu" },
-      { id: 2, name: "接入医院", data: "0", color: "#1cc88a", icon: "sfont system-xiaoxi" },
-      { id: 3, name: "订单总量", data: "0", color: "#36b9cc", icon: "sfont system-shuliang_mianxing" },
-      { id: 4, name: "订单金额", data: "0", color: "#f6c23e", icon: "sfont system-jindutiaoshouyidaozhang" }
+      { id: 1, name: "注册会员", data: "0", color: "#4e73df", icon: "sfont system-yonghu" },
+      { id: 2, name: "教练数目", data: "0", color: "#1cc88a", icon: "sfont system-xiaoxi" },
+      { id: 3, name: "课程数目", data: "0", color: "#36b9cc", icon: "sfont system-shuliang_mianxing" },
+      { id: 4, name: "账单总额", data: "0", color: "#f6c23e", icon: "sfont system-jindutiaoshouyidaozhang" }
     ]);
     userStatistics().then(res => {
       list.value[0].data = res.total;

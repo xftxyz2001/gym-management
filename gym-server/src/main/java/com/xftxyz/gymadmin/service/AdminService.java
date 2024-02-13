@@ -2,6 +2,8 @@ package com.xftxyz.gymadmin.service;
 
 import com.xftxyz.gymadmin.domain.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.gymadmin.vo.req.LoginReq;
+import com.xftxyz.gymadmin.vo.resp.LoginResp;
 
 /**
 * @author 25810
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AdminService extends IService<Admin> {
 
+    LoginResp login(LoginReq loginReq);
 }
