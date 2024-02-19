@@ -1,4 +1,4 @@
-import { checkAuthorizationApi } from "@/api/user";
+import { loginApi } from "@/api/admin";
 const state = () => ({
   token: "", // 登录token
   info: {} // 用户信息
@@ -26,25 +26,28 @@ const actions = {
   // login by login.vue
   login({ commit, dispatch }, params) {
     return new Promise((resolve, reject) => {
-      // loginApi(params)
-      // .then(res => {
-      //   commit('tokenChange', res.data.token)
-      //   dispatch('getInfo', { token: res.data.token })
-      //   .then(infoRes => {
-      //     resolve(res.data.token)
-      //   })
-      // }).catch(err => {
-      //   reject(err)
-      // })
-      commit("tokenChange", params.password);
-      checkAuthorizationApi()
+      loginApi(params)
         .then(res => {
-          commit("infoChange", params);
-          resolve(res);
+          commit("tokenChange", res.token);
+          // dispatch('getInfo', { token: res.token })
+          // .then(infoRes => {
+          //   resolve(res.token)
+          // })
+          commit("infoChange", res.admin);
+          resolve(res.token);
         })
         .catch(err => {
           reject(err);
         });
+      // commit("tokenChange", params.password);
+      // checkAuthorizationApi()
+      //   .then(res => {
+      //     commit("infoChange", params);
+      //     resolve(res);
+      //   })
+      //   .catch(err => {
+      //     reject(err);
+      //   });
     });
   },
   // get user info after user logined

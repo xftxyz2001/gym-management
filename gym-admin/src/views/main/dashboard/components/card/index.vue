@@ -5,7 +5,7 @@
 </template>
 
 <script lang="js">
-import { hospitalStatistics, userStatistics, orderStatistics } from "@/api/statistics";
+// import { hospitalStatistics, userStatistics, orderStatistics } from "@/api/statistics";
 import { defineComponent, ref } from "vue";
 import Row from "./row.vue";
 export default defineComponent({
@@ -19,16 +19,16 @@ export default defineComponent({
       { id: 3, name: "课程数目", data: "0", color: "#36b9cc", icon: "sfont system-shuliang_mianxing" },
       { id: 4, name: "账单总额", data: "0", color: "#f6c23e", icon: "sfont system-jindutiaoshouyidaozhang" }
     ]);
-    userStatistics().then(res => {
-      list.value[0].data = res.total;
-    });
-    hospitalStatistics().then(res => {
-      list.value[1].data = res.count;
-    });
-    orderStatistics().then(res => {
-      list.value[2].data = res.total;
-      list.value[3].data = res.totalAmount;
-    });
+    // userStatistics().then(res => {
+    //   list.value[0].data = res.total;
+    // });
+    // hospitalStatistics().then(res => {
+    //   list.value[1].data = res.count;
+    // });
+    // orderStatistics().then(res => {
+    //   list.value[2].data = res.total;
+    //   list.value[3].data = res.totalAmount;
+    // });
     return {
       list
     };

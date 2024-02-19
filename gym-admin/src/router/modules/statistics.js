@@ -9,7 +9,7 @@ const route = [
     children: [
       {
         path: "index",
-        component: createNameComponent(() => import("@/views/main/statistics/index.vue")),
+        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
         meta: { title: "统计分析", hideClose: true }
       }
     ]
