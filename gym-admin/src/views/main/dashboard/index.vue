@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div>欢迎使用“医来”后台管理系统</div>
+    <div>欢迎使用健身房管理系统</div>
     <Card />
     <!-- <Charts /> -->
   </div>

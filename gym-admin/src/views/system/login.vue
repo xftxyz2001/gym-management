@@ -93,7 +93,7 @@ export default defineComponent({
       checkForm().then(() => {
         form.loading = true;
         let params = {
-          name: form.name,
+          login: form.name,
           password: form.password
         };
         store
