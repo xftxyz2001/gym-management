@@ -26,8 +26,8 @@ public class AdminController {
 
     // 修改密码
     @PostMapping("/password/change")
-    public Boolean changePassword(@RequestHeader(GymProperties.USER_ID) Long userId,
-                               @RequestBody @NotNull ChangePasswordReq changePasswordReq) {
+    public Boolean changePassword(@RequestAttribute(GymProperties.USER_ID) Long userId,
+                                  @RequestBody @NotNull ChangePasswordReq changePasswordReq) {
         changePasswordReq.setUserId(userId);
         return adminService.changePassword(changePasswordReq);
     }

@@ -75,11 +75,11 @@ export default defineComponent({
     };
 
     const showPasswordLayer = () => {
-      ElMessage({
-        type: "warning",
-        message: "请联系管理员修改密码"
-      });
-      // layer.show = true
+      // ElMessage({
+      //   type: "warning",
+      //   message: "请联系管理员修改密码"
+      // });
+      layer.show = true
     };
     return {
       isCollapse,

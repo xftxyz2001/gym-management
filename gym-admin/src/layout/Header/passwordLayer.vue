@@ -38,9 +38,10 @@ export default defineComponent({
     const ruleForm = ref(null);
     const layerDom = ref(null);
     const store = useStore();
+    const {id,name }=store.state.user.info;
     let form = ref({
-      userId: "123465",
-      name: "",
+      userId: id,
+      name: name,
       old: "",
       new: ""
     });
@@ -53,9 +54,9 @@ export default defineComponent({
         ruleForm.value.validate(valid => {
           if (valid) {
             let params = {
-              id: form.value.userId,
-              old: form.value.old,
-              new: form.value.new
+              userId: form.value.userId,
+              oldPassword: form.value.old,
+              newPassword: form.value.new
             };
             passwordChange(params).then(res => {
               ElMessage({

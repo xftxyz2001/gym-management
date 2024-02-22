@@ -10,9 +10,8 @@ export function loginApi(data) {
 
 export function passwordChange(data) {
   return request({
-    url: "/user/passwordChange",
+    url: "/api/admin/password/change",
     method: "post",
-    baseURL: "/mock",
     data
   });
 }
