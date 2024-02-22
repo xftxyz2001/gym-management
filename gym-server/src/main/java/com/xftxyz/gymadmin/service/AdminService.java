@@ -2,6 +2,7 @@ package com.xftxyz.gymadmin.service;
 
 import com.xftxyz.gymadmin.domain.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.gymadmin.vo.req.ChangePasswordReq;
 import com.xftxyz.gymadmin.vo.req.LoginReq;
 import com.xftxyz.gymadmin.vo.resp.LoginResp;
 
@@ -13,4 +14,6 @@ import com.xftxyz.gymadmin.vo.resp.LoginResp;
 public interface AdminService extends IService<Admin> {
 
     LoginResp login(LoginReq loginReq);
+
+    Boolean changePassword(ChangePasswordReq changePasswordReq);
 }
