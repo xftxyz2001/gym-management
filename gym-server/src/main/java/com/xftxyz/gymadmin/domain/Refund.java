@@ -4,16 +4,18 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 退款记录
+ *
  * @TableName refund
  */
-@TableName(value ="refund")
+@TableName(value = "refund")
 @Data
 public class Refund implements Serializable {
     /**
