@@ -4,13 +4,17 @@ const route = [
   {
     path: "/points",
     component: Layout,
-    redirect: "/dashboard",
-    meta: { title: "dashboard", icon: "sfont system-home" },
+    meta: { title: "积分管理", icon: "sfont system-home" },
     children: [
       {
-        path: "dashboard",
-        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
-        meta: { title: "积分管理", icon: "sfont system-home", hideClose: true }
+        path: "reward",
+        component: createNameComponent(() => import("@/views/main/points/reward/index.vue")),
+        meta: { title: "积分兑换奖品", icon: "sfont system-home", hideClose: true }
+      },
+      {
+        path: "exchange",
+        component: createNameComponent(() => import("@/views/main/points/exchange/index.vue")),
+        meta: { title: "积分兑换记录", icon: "sfont system-home", hideClose: true }
       }
     ]
   }

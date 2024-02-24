@@ -4,13 +4,22 @@ const route = [
   {
     path: "/course",
     component: Layout,
-    redirect: "/dashboard",
-    meta: { title: "dashboard", icon: "sfont system-home" },
+    meta: { title: "课程管理", icon: "sfont system-home" },
     children: [
       {
-        path: "dashboard",
-        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
+        path: "project",
+        component: createNameComponent(() => import("@/views/main/course/project/index.vue")),
+        meta: { title: "训练项目", icon: "sfont system-home", hideClose: true }
+      },
+      {
+        path: "course",
+        component: createNameComponent(() => import("@/views/main/course/course/index.vue")),
         meta: { title: "课程管理", icon: "sfont system-home", hideClose: true }
+      },
+      {
+        path: "coach",
+        component: createNameComponent(() => import("@/views/main/course/coach/index.vue")),
+        meta: { title: "教练管理", icon: "sfont system-home", hideClose: true }
       }
     ]
   }

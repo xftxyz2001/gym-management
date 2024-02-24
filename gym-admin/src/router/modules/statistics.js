@@ -5,11 +5,11 @@ const route = [
     path: "/statistics",
     component: Layout,
     redirect: "/statistics/index",
-    meta: { title: "statistics", icon: "iconfont icon-tongji" },
+    meta: { title: "statistics", icon: "sfont system-home" },
     children: [
       {
         path: "index",
-        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
+        component: createNameComponent(() => import("@/views/main/statistics/index.vue")),
         meta: { title: "统计分析", hideClose: true }
       }
     ]

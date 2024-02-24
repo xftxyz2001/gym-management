@@ -4,13 +4,17 @@ const route = [
   {
     path: "/finance",
     component: Layout,
-    redirect: "/dashboard",
-    meta: { title: "dashboard", icon: "sfont system-home" },
+    meta: { title: "财务管理", icon: "sfont system-home" },
     children: [
       {
-        path: "dashboard",
-        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
-        meta: { title: "财务管理", icon: "sfont system-home", hideClose: true }
+        path: "consume",
+        component: createNameComponent(() => import("@/views/main/finance/consume/index.vue")),
+        meta: { title: "消费记录", icon: "sfont system-home", hideClose: true }
+      },
+      {
+        path: "refund",
+        component: createNameComponent(() => import("@/views/main/finance/refund/index.vue")),
+        meta: { title: "退款记录", icon: "sfont system-home", hideClose: true }
       }
     ]
   }

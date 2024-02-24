@@ -4,13 +4,17 @@ const route = [
   {
     path: "/member",
     component: Layout,
-    redirect: "/dashboard",
-    meta: { title: "dashboard", icon: "sfont system-home" },
+    meta: { title: "会员管理", icon: "sfont system-home" },
     children: [
       {
-        path: "dashboard",
-        component: createNameComponent(() => import("@/views/main/dashboard/index.vue")),
+        path: "member",
+        component: createNameComponent(() => import("@/views/main/member/member/index.vue")),
         meta: { title: "会员管理", icon: "sfont system-home", hideClose: true }
+      },
+      {
+        path: "card",
+        component: createNameComponent(() => import("@/views/main/member/card/index.vue")),
+        meta: { title: "会员卡管理", icon: "sfont system-home", hideClose: true }
       }
     ]
   }

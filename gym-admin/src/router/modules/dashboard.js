@@ -5,7 +5,7 @@ const route = [
     path: "/",
     component: Layout,
     redirect: "/dashboard",
-    meta: { title: "dashboard", icon: "sfont system-home" },
+    meta: { title: "仪表盘", icon: "sfont system-home" },
     children: [
       {
         path: "dashboard",
