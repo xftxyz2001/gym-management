@@ -38,7 +38,7 @@ export default defineComponent({
     const ruleForm = ref(null);
     const layerDom = ref(null);
     const store = useStore();
-    const {id,name }=store.state.user.info;
+    const { id, name } = store.state.user.info;
     let form = ref({
       userId: id,
       name: name,

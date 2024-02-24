@@ -79,7 +79,7 @@ export default defineComponent({
       //   type: "warning",
       //   message: "请联系管理员修改密码"
       // });
-      layer.show = true
+      layer.show = true;
     };
     return {
       isCollapse,
