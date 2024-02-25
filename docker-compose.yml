@@ -1,0 +1,47 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.2.0
+    container_name: mysql
+    restart: unless-stopped
+    networks:
+      - gym-network
+    ports:
+      - "3306:3306"
+    privileged: true
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - ~/mysql8.2.0/conf.d:/etc/mysql/conf.d
+      - ~/mysql8.2.0/log:/var/log/mysql
+      - ~/mysql8.2.0/data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+  gym-server:
+    build: gym-server
+    image: chenluoxing/gym-server:0.0.1
+    container_name: gym-server
+    restart: unless-stopped
+    networks:
+      - gym-network
+    ports:
+      - "8080:8080"
+    privileged: true
+    volumes:
+      - ~/appconfig/gym-server:/app/config
+
+  gym-admin:
+    build: gym-admin
+    image: chenluoxing/gym-admin:0.0.1
+    container_name: gym-admin
+    restart: unless-stopped
+    networks:
+      - gym-network
+    ports:
+      - "3001:3001"
+
+networks:
+  gym-network:
+    name: gym-network
+    driver: bridge
