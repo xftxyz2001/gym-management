@@ -35,11 +35,12 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="name" label="会员姓名"></el-table-column>
-        <el-table-column prop="gender" label="性别"></el-table-column>
+        <el-table-column prop="gender" label="性别" :formatter="genderFormatter"></el-table-column>
         <el-table-column prop="birthday" label="出生日期"></el-table-column>
         <el-table-column prop="height" label="身高"></el-table-column>
         <el-table-column prop="weight" label="体重"></el-table-column>
         <el-table-column prop="bodyType" label="体型"></el-table-column>
+        <el-table-column prop="contact" label="联系方式"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="points" label="积分"></el-table-column>
 
@@ -72,9 +73,9 @@
         </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="formModel.gender">
-            <el-radio label="女" :value="0">女</el-radio>
-            <el-radio label="男" :value="1">男</el-radio>
-            <el-radio label="保密" :value="-1">保密</el-radio>
+            <el-radio :label="0">女</el-radio>
+            <el-radio :label="1">男</el-radio>
+            <el-radio :label="-1">保密</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="出生日期" prop="birthday">
@@ -88,6 +89,9 @@
         </el-form-item>
         <el-form-item label="体型" prop="bodyType">
           <el-input v-model="formModel.bodyType" placeholder="请输入体型"></el-input>
+        </el-form-item>
+        <el-form-item label="联系方式" prop="contact">
+          <el-input v-model="formModel.contact" placeholder="请输入联系方式"></el-input>
         </el-form-item>
         <el-form-item label="地址" prop="address">
           <el-input v-model="formModel.address" placeholder="请输入地址"></el-input>
@@ -129,6 +133,7 @@ const formModel = ref({
   height: "",
   weight: "",
   bodyType: "",
+  contact: "",
   address: "",
   points: 0
 });
@@ -162,6 +167,19 @@ onBeforeMount(() => {
   getTableData();
 });
 
+// 性别格式化
+function genderFormatter(row) {
+  switch (row.gender) {
+    case 0:
+      return "女";
+    case 1:
+      return "男";
+    case -1:
+    default:
+      return "保密";
+  }
+}
+
 // 删除选中数据
 function deleteChoose() {
   const ids = chooseData.value.map(item => item.id);
@@ -188,6 +206,7 @@ function openAddDialog() {
     height: "",
     weight: "",
     bodyType: "",
+    contact: "",
     address: "",
     points: 0
   };

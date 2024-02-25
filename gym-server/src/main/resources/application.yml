@@ -14,3 +14,8 @@ spring:
     url: jdbc:mysql://mysql:3306/gym?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
     password: 123456
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -39,6 +40,7 @@ public class Member implements Serializable {
     /**
      * 出生日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @TableField(value = "birthday")
     private Date birthday;
 
