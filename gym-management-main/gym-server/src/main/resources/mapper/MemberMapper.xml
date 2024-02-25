@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.gymadmin.mapper.MemberMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.gymadmin.domain.Member">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="height" column="height" jdbcType="DECIMAL"/>
+        <result property="weight" column="weight" jdbcType="DECIMAL"/>
+        <result property="bodyType" column="body_type" jdbcType="VARCHAR"/>
+        <result property="contact" column="contact" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="points" column="points" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,name,gender,
+        birthday,height,weight,
+        body_type,contact,address,
+        points,create_time,update_time,
+        is_deleted
+    </sql>
+</mapper>
