@@ -5,7 +5,7 @@ const route = [
     path: "/statistics",
     component: Layout,
     redirect: "/statistics/index",
-    meta: { title: "statistics", icon: "sfont system-home" },
+    meta: { title: "statistics", icon: "sfont icon-tongjifenxi" },
     children: [
       {
         path: "index",
