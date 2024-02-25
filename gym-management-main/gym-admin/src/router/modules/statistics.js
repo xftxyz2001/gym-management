@@ -10,7 +10,7 @@ const route = [
       {
         path: "index",
         component: createNameComponent(() => import("@/views/main/statistics/index.vue")),
-        meta: { title: "统计分析", hideClose: true }
+        meta: { title: "统计分析",icon: "sfont icon-tongjifenxi", hideClose: true }
       }
     ]
   }
