@@ -1,7 +1,11 @@
 package com.xftxyz.gymadmin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Member;
+import com.xftxyz.gymadmin.vo.req.ListMemberReq;
+
+import java.util.List;
 
 /**
  * @author 25810
@@ -10,4 +14,15 @@ import com.xftxyz.gymadmin.domain.Member;
  */
 public interface MemberService extends IService<Member> {
 
+    Boolean saveMember(Member member);
+
+    Boolean removeMember(Long id);
+
+    Boolean removeMembers(List<Long> idList);
+
+    Boolean updateMember(Member member);
+
+    Member getMember(Long id);
+
+    IPage<Member> listMembers(ListMemberReq listMemberReq, Integer current, Integer size);
 }
