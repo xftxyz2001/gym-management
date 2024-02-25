@@ -56,7 +56,7 @@ public class MemberController {
     }
 
     // 条件查询会员
-    @GetMapping("/members")
+    @PostMapping("/members")
     public IPage<Member> listMembers(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
                                      @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
                                      @RequestBody ListMemberReq listMemberReq) {
@@ -95,7 +95,7 @@ public class MemberController {
     }
 
     // 条件查询会员卡
-    @GetMapping("/cards")
+    @PostMapping("/cards")
     public IPage<Card> listCards(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
                                  @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
                                  @RequestBody ListCardReq listCardReq) {
