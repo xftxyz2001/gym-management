@@ -93,3 +93,50 @@ export function listCards(data, current, size) {
     data
   });
 }
+
+export function saveCardType(data) {
+  return request({
+    url: "/api/member/cardType",
+    method: "post",
+    data
+  });
+}
+
+export function removeCardType(id) {
+  return request({
+    url: `/api/member/cardType/${id}`,
+    method: "delete"
+  });
+}
+
+export function removeCardTypes(data) {
+  return request({
+    url: "/api/member/cardTypes",
+    method: "delete",
+    data
+  });
+}
+
+export function updateCardType(data) {
+  return request({
+    url: "/api/member/cardType",
+    method: "put",
+    data
+  });
+}
+
+export function getCardType(id) {
+  return request({
+    url: `/api/member/cardType/${id}`,
+    method: "get"
+  });
+}
+
+export function listCardTypes(data, current, size) {
+  return request({
+    url: "/api/member/cardTypes",
+    method: "post",
+    params: { current, size },
+    data
+  });
+}

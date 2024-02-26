@@ -76,7 +76,7 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeMapper, Exchange>
     @Override
     public Exchange getExchange(Long id) {
         Exchange exchange = baseMapper.selectById(id);
-        if (exchange == null) {
+        if (ObjectUtils.isEmpty(exchange)) {
             throw new BusinessException(ResultEnum.EXCHANGE_NOT_EXIST);
         }
         return exchange;

@@ -75,7 +75,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Override
     public Course getCourse(Long id) {
         Course course = baseMapper.selectById(id);
-        if (course == null) {
+        if (ObjectUtils.isEmpty(course)) {
             throw new BusinessException(ResultEnum.COURSE_NOT_EXIST);
         }
         return course;

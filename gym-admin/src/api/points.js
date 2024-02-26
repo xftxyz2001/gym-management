@@ -38,10 +38,11 @@ export function getReward(id) {
   });
 }
 
-export function listRewards(data) {
+export function listRewards(data, current, size) {
   return request({
     url: "/api/points/rewards",
     method: "post",
+    params: { current, size },
     data
   });
 }
@@ -76,10 +77,11 @@ export function getExchange(id) {
   });
 }
 
-export function listExchanges(data) {
+export function listExchanges(data, current, size) {
   return request({
     url: "/api/points/exchanges",
     method: "post",
+    params: { current, size },
     data
   });
 }

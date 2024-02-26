@@ -69,7 +69,7 @@ public class CoachServiceImpl extends ServiceImpl<CoachMapper, Coach>
     @Override
     public Coach getCoach(Long id) {
         Coach coach = baseMapper.selectById(id);
-        if (coach == null) {
+        if (ObjectUtils.isEmpty(coach)) {
             throw new BusinessException(ResultEnum.COACH_NOT_EXIST);
         }
         return coach;

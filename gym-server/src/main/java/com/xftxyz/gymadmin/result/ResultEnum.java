@@ -25,6 +25,11 @@ public enum ResultEnum {
     CARD_REMOVE_FAILED(212, "会员卡删除失败"), // 会员卡删除失败
     CARD_UPDATE_FAILED(213, "会员卡更新失败"), // 会员卡更新失败
     CARD_NOT_EXIST(214, "会员卡不存在"), // 会员卡不存在
+    CARD_TYPE_EXIST(215, "卡类型已存在"), // 卡类型已存在
+    CARD_TYPE_SAVE_FAILED(216, "卡类型保存失败"), // 卡类型保存失败
+    CARD_TYPE_REMOVE_FAILED(217, "卡类型删除失败"), // 卡类型删除失败
+    CARD_TYPE_UPDATE_FAILED(218, "卡类型更新失败"), // 卡类型更新失败
+    CARD_TYPE_NOT_EXIST(219, "卡类型不存在"), // 卡类型不存在
 
     PROJECT_EXIST(220, "项目已存在"), // 项目已存在
     PROJECT_SAVE_FAILED(221, "项目保存失败"), // 项目保存失败

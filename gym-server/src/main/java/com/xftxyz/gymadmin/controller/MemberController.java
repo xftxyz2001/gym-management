@@ -2,8 +2,10 @@ package com.xftxyz.gymadmin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xftxyz.gymadmin.domain.Card;
+import com.xftxyz.gymadmin.domain.CardType;
 import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.service.CardService;
+import com.xftxyz.gymadmin.service.CardTypeService;
 import com.xftxyz.gymadmin.service.MemberService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.ListMemberReq;
@@ -24,6 +26,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final CardService cardService;
+    private final CardTypeService cardTypeService;
 
     // 新增会员
     @PostMapping("/member")
@@ -100,6 +103,44 @@ public class MemberController {
                                  @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
                                  @RequestBody ListCardReq listCardReq) {
         return cardService.listCards(listCardReq, current, size);
+    }
+
+
+    // 新增会员卡类型
+    @PostMapping("/cardType")
+    public Boolean saveCardType(@RequestBody @NotNull CardType cardType) {
+        return cardTypeService.saveCardType(cardType);
+    }
+
+    // 删除会员卡类型
+    @DeleteMapping("/cardType/{id}")
+    public Boolean removeCardType(@PathVariable("id") @Min(1) Long id) {
+        return cardTypeService.removeCardType(id);
+    }
+
+    // 批量删除会员卡类型
+    @DeleteMapping("/cardTypes")
+    public Boolean removeCardTypes(@RequestBody @NotEmpty List<Long> idList) {
+        return cardTypeService.removeCardTypes(idList);
+    }
+
+    // 更新会员卡类型
+    @PutMapping("/cardType")
+    public Boolean updateCardType(@RequestBody @NotNull CardType cardType) {
+        return cardTypeService.updateCardType(cardType);
+    }
+
+    // 查询会员卡类型
+    @GetMapping("/cardType/{id}")
+    public CardType getCardType(@PathVariable("id") @Min(1) Long id) {
+        return cardTypeService.getCardType(id);
+    }
+
+    // 获取会员卡类型分页
+    @PostMapping("/cardTypes")
+    public IPage<CardType> listCardTypes(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
+                                         @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size) {
+        return cardTypeService.listCardTypes(current, size);
     }
 
 }

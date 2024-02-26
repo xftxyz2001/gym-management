@@ -15,6 +15,11 @@ const route = [
         path: "card",
         component: createNameComponent(() => import("@/views/main/member/card/index.vue")),
         meta: { title: "会员卡管理", icon: "sfont icon-huiyuanqia", hideClose: true }
+      },
+      {
+        path: "cardtype",
+        component: createNameComponent(() => import("@/views/main/member/cardtype/index.vue")),
+        meta: { title: "会员卡类型", icon: "sfont icon-huiyuanqia", hideClose: true }
       }
     ]
   }

@@ -57,7 +57,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
     @Override
     public Boolean updateCard(Card card) {
         Card existCard = baseMapper.selectById(card.getId());
-        if (existCard == null) {
+        if (ObjectUtils.isEmpty(existCard)) {
             throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
         }
         if (baseMapper.updateById(card) <= 0) {
@@ -69,7 +69,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
     @Override
     public Card getCard(Long id) {
         Card card = baseMapper.selectById(id);
-        if (card == null) {
+        if (ObjectUtils.isEmpty(card)) {
             throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
         }
         return card;
