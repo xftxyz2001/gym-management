@@ -1,4 +1,5 @@
 import request from "@/utils/system/request";
+
 export function saveReward(data) {
   return request({
     url: "/api/points/reward",

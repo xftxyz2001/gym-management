@@ -68,6 +68,8 @@ public enum ResultEnum {
     POINTS_NOT_ENOUGH(300, "积分不足"),
     POINTS_UPDATE_FAILED(301, "积分更新失败"),
     EXCHANGE_FAILED(302, "兑换失败"),
+    CONSUME_TYPE_ERROR(303, "消费类型错误"),
+    REFUND_AMOUNT_ERROR(304, "退款金额错误"),
 
     // 4参数错误
     PARAM_ERROR(400, "非法参数"),

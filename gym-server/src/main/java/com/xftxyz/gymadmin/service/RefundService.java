@@ -1,7 +1,11 @@
 package com.xftxyz.gymadmin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Refund;
+import com.xftxyz.gymadmin.vo.req.ListRefundReq;
+
+import java.util.List;
 
 /**
  * @author 25810
@@ -10,4 +14,15 @@ import com.xftxyz.gymadmin.domain.Refund;
  */
 public interface RefundService extends IService<Refund> {
 
+    Boolean saveRefund(Refund refund);
+
+    Boolean removeRefund(Long id);
+
+    Boolean removeRefunds(List<Long> idList);
+
+    Boolean updateRefund(Refund refund);
+
+    Refund getRefund(Long id);
+
+    IPage<Refund> listRefunds(ListRefundReq listRefundReq, Integer current, Integer size);
 }
