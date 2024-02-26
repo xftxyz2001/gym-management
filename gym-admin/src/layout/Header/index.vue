@@ -19,7 +19,7 @@
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
-            管理员
+            {{ username }}
             <i class="sfont system-xiala"></i>
           </span>
           <template #dropdown>
@@ -81,12 +81,16 @@ export default defineComponent({
       // });
       layer.show = true;
     };
+
+    const username = computed(() => store.state.user.info.name);
+
     return {
       isCollapse,
       layer,
       opendStateChange,
       loginOut,
-      showPasswordLayer
+      showPasswordLayer,
+      username
     };
   }
 });

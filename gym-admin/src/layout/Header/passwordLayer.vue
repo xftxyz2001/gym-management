@@ -1,7 +1,7 @@
 <template>
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right: 30px">
-      <el-form-item label="用户名：" prop="name">管理员</el-form-item>
+      <el-form-item label="用户名：" prop="name">{{ form.name }}</el-form-item>
       <el-form-item label="原密码：" prop="old">
         <el-input v-model="form.old" placeholder="请输入原密码" show-password></el-input>
       </el-form-item>
