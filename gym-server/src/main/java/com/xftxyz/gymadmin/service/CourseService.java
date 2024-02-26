@@ -1,7 +1,11 @@
 package com.xftxyz.gymadmin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Course;
+import com.xftxyz.gymadmin.vo.req.ListCourseReq;
+
+import java.util.List;
 
 /**
  * @author 25810
@@ -10,4 +14,15 @@ import com.xftxyz.gymadmin.domain.Course;
  */
 public interface CourseService extends IService<Course> {
 
+    Boolean saveCourse(Course course);
+
+    Boolean removeCourse(Long id);
+
+    Boolean removeCourses(List<Long> idList);
+
+    Boolean updateCourse(Course course);
+
+    Course getCourse(Long id);
+
+    IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size);
 }

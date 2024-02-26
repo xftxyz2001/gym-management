@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.gymadmin.domain.Card;
+import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.exception.BusinessException;
 import com.xftxyz.gymadmin.mapper.CardMapper;
+import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -21,8 +24,11 @@ import java.util.List;
  * @createDate 2024-02-14 07:08:06
  */
 @Service
+@RequiredArgsConstructor
 public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         implements CardService {
+
+    private final MemberMapper memberMapper;
 
     @Override
     public Boolean saveCard(Card card) {
@@ -71,11 +77,15 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
 
     @Override
     public IPage<Card> listCards(ListCardReq listCardReq, Integer current, Integer size) {
-        LambdaQueryWrapper<Card> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCardReq.getId()), Card::getId, listCardReq.getId());
-        lambdaQueryWrapper.eq(!ObjectUtils.isEmpty(listCardReq.getMemberId()), Card::getMemberId, listCardReq.getMemberId());
+        LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCardReq.getName()), Member::getName, listCardReq.getName());
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCardReq.getContact()), Member::getContact, listCardReq.getContact());
+        List<Member> members = memberMapper.selectList(lambdaQueryWrapper);
+        List<Long> memberIdList = members.stream().map(Member::getId).toList();
 
-        return baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+        LambdaQueryWrapper<Card> cardLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        cardLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Card::getMemberId, memberIdList);
+        return baseMapper.selectPage(new Page<>(current, size), cardLambdaQueryWrapper);
     }
 }
 

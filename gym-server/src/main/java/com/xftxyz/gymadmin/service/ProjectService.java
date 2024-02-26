@@ -1,7 +1,11 @@
 package com.xftxyz.gymadmin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Project;
+import com.xftxyz.gymadmin.vo.req.ListProjectReq;
+
+import java.util.List;
 
 /**
  * @author 25810
@@ -10,4 +14,15 @@ import com.xftxyz.gymadmin.domain.Project;
  */
 public interface ProjectService extends IService<Project> {
 
+    Boolean saveProject(Project project);
+
+    Boolean removeProject(Long id);
+
+    Boolean removeProjects(List<Long> idList);
+
+    Boolean updateProject(Project project);
+
+    Project getProject(Long id);
+
+    IPage<Project> listProjects(ListProjectReq listProjectReq, Integer current, Integer size);
 }

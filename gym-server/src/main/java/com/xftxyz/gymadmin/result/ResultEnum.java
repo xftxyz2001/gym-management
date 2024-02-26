@@ -26,6 +26,25 @@ public enum ResultEnum {
     CARD_UPDATE_FAILED(213, "会员卡更新失败"), // 会员卡更新失败
     CARD_NOT_EXIST(214, "会员卡不存在"), // 会员卡不存在
 
+    PROJECT_EXIST(220, "项目已存在"), // 项目已存在
+    PROJECT_SAVE_FAILED(221, "项目保存失败"), // 项目保存失败
+    PROJECT_REMOVE_FAILED(222, "项目删除失败"), // 项目删除失败
+    PROJECT_UPDATE_FAILED(223, "项目更新失败"), // 项目更新失败
+    PROJECT_NOT_EXIST(224, "项目不存在"), // 项目不存在
+
+    COURSE_EXIST(230, "课程已存在"), // 课程已存在
+    COURSE_SAVE_FAILED(231, "课程保存失败"), // 课程保存失败
+    COURSE_REMOVE_FAILED(232, "课程删除失败"), // 课程删除失败
+    COURSE_UPDATE_FAILED(233, "课程更新失败"), // 课程更新失败
+    COURSE_NOT_EXIST(234, "课程不存在"), // 课程不存在
+
+    COACH_EXIST(240, "教练已存在"), // 教练已存在
+    COACH_SAVE_FAILED(241, "教练保存失败"), // 教练保存失败
+    COACH_REMOVE_FAILED(242, "教练删除失败"), // 教练删除失败
+    COACH_UPDATE_FAILED(243, "教练更新失败"), // 教练更新失败
+    COACH_NOT_EXIST(244, "教练不存在"), // 教练不存在
+
+
 
     // 4参数错误
     PARAM_ERROR(400, "非法参数"),
