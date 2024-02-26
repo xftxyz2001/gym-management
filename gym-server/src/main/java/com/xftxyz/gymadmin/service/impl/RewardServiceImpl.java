@@ -48,7 +48,7 @@ public class RewardServiceImpl extends ServiceImpl<RewardMapper, Reward>
 
     @Override
     public Boolean removeRewards(List<Long> idList) {
-        if (baseMapper.deleteBatchIds(idList) <= idList.size()) {
+        if (baseMapper.deleteBatchIds(idList) < idList.size()) {
             throw new BusinessException(ResultEnum.REWARD_REMOVE_FAILED);
         }
         return true;

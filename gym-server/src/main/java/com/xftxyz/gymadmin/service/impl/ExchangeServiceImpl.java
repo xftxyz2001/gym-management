@@ -67,7 +67,7 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeMapper, Exchange>
 
     @Override
     public Boolean removeExchanges(List<Long> idList) {
-        if (baseMapper.deleteBatchIds(idList) <= idList.size()) {
+        if (baseMapper.deleteBatchIds(idList) < idList.size()) {
             throw new BusinessException(ResultEnum.EXCHANGE_REMOVE_FAILED);
         }
         return true;
