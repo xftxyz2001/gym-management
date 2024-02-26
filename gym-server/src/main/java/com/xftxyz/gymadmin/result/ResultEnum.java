@@ -44,7 +44,30 @@ public enum ResultEnum {
     COACH_UPDATE_FAILED(243, "教练更新失败"), // 教练更新失败
     COACH_NOT_EXIST(244, "教练不存在"), // 教练不存在
 
+    REWARD_EXIST(250, "兑换物品已存在"), // 兑换物品已存在
+    REWARD_SAVE_FAILED(251, "兑换物品保存失败"), // 兑换物品保存失败
+    REWARD_REMOVE_FAILED(252, "兑换物品删除失败"), // 兑换物品删除失败
+    REWARD_UPDATE_FAILED(253, "兑换物品更新失败"), // 兑换物品更新失败
+    REWARD_NOT_EXIST(254, "兑换物品不存在"), // 兑换物品不存在
 
+    EXCHANGE_SAVE_FAILED(261, "兑换记录保存失败"), // 兑换记录保存失败
+    EXCHANGE_REMOVE_FAILED(262, "兑换记录删除失败"), // 兑换记录删除失败
+    EXCHANGE_UPDATE_FAILED(263, "兑换记录更新失败"), // 兑换记录更新失败
+    EXCHANGE_NOT_EXIST(264, "兑换记录不存在"), // 兑换记录不存在
+
+    CONSUME_SAVE_FAILED(271, "消费记录保存失败"), // 消费记录保存失败
+    CONSUME_REMOVE_FAILED(272, "消费记录删除失败"), // 消费记录删除失败
+    CONSUME_UPDATE_FAILED(273, "消费记录更新失败"), // 消费记录更新失败
+    CONSUME_NOT_EXIST(274, "消费记录不存在"), // 消费记录不存在
+
+    REFUND_SAVE_FAILED(281, "退款记录保存失败"), // 退款记录保存失败
+    REFUND_REMOVE_FAILED(282, "退款记录删除失败"), // 退款记录删除失败
+    REFUND_UPDATE_FAILED(283, "退款记录更新失败"), // 退款记录更新失败
+    REFUND_NOT_EXIST(284, "退款记录不存在"), // 退款记录不存在
+
+    POINTS_NOT_ENOUGH(300, "积分不足"),
+    POINTS_UPDATE_FAILED(301, "积分更新失败"),
+    EXCHANGE_FAILED(302, "兑换失败"),
 
     // 4参数错误
     PARAM_ERROR(400, "非法参数"),

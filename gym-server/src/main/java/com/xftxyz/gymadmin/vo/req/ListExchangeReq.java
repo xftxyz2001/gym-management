@@ -3,15 +3,15 @@ package com.xftxyz.gymadmin.vo.req;
 import lombok.Data;
 
 @Data
-public class ListCoachReq {
+public class ListExchangeReq {
 
     /**
-     * 教练姓名
+     * 会员姓名
      */
     private String name;
 
     /**
-     * 教练技能描述
+     * 联系方式
      */
-    private String skill;
+    private String contact;
 }

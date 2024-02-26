@@ -1,7 +1,12 @@
 package com.xftxyz.gymadmin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Exchange;
+import com.xftxyz.gymadmin.vo.req.ExchangeReq;
+import com.xftxyz.gymadmin.vo.req.ListExchangeReq;
+
+import java.util.List;
 
 /**
  * @author 25810
@@ -10,4 +15,13 @@ import com.xftxyz.gymadmin.domain.Exchange;
  */
 public interface ExchangeService extends IService<Exchange> {
 
+    Boolean exchangeReward(ExchangeReq exchangeReq);
+
+    Boolean removeExchange(Long id);
+
+    Boolean removeExchanges(List<Long> idList);
+
+    Exchange getExchange(Long id);
+
+    IPage<Exchange> listExchanges(ListExchangeReq listExchangeReq, Integer current, Integer size);
 }

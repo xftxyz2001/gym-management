@@ -101,8 +101,8 @@ public class CourseController {
     // 条件查询课程
     @PostMapping("/courses")
     public IPage<Course> listCourses(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
-                                    @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
-                                    @RequestBody ListCourseReq listCourseReq) {
+                                     @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
+                                     @RequestBody ListCourseReq listCourseReq) {
         return courseService.listCourses(listCourseReq, current, size);
     }
 
@@ -140,8 +140,8 @@ public class CourseController {
     // 条件查询教练
     @PostMapping("/coaches")
     public IPage<Coach> listCoaches(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
-                                  @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
-                                  @RequestBody ListCoachReq listCoachReq) {
+                                    @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
+                                    @RequestBody ListCoachReq listCoachReq) {
         return coachService.listCoaches(listCoachReq, current, size);
     }
 }
