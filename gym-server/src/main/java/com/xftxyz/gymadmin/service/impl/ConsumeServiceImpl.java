@@ -12,10 +12,13 @@ import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.vo.req.ListConsumeReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,6 +102,29 @@ public class ConsumeServiceImpl extends ServiceImpl<ConsumeMapper, Consume>
             consumeLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Consume::getMemberId, memberIdList);
         }
         return baseMapper.selectPage(new Page<>(current, size), consumeLambdaQueryWrapper);
+    }
+
+    @Override
+    public StatisticsVO incomeStatistics(StatisticsVO statisticsVO) {
+        LambdaQueryWrapper<Consume> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        Date from = statisticsVO.getFrom();
+        Date to = statisticsVO.getTo();
+        if (ObjectUtils.isEmpty(from) && ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        } else if (!ObjectUtils.isEmpty(from) && !ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.between(Consume::getCreateTime, from, to);
+        } else if (!ObjectUtils.isEmpty(from)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.ge(Consume::getCreateTime, from);
+        } else {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.le(Consume::getCreateTime, to);
+        }
+        List<Consume> consumeList = baseMapper.selectList(lambdaQueryWrapper);
+        BigDecimal amount = consumeList.stream().reduce(BigDecimal.ZERO, (sum, consume) -> sum.add(consume.getAmount()), BigDecimal::add);
+        statisticsVO.setCount(amount);
+        return statisticsVO;
     }
 }
 

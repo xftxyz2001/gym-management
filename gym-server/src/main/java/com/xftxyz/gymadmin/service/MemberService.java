@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.vo.req.ListMemberReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface MemberService extends IService<Member> {
     Member getMember(Long id);
 
     IPage<Member> listMembers(ListMemberReq listMemberReq, Integer current, Integer size);
+
+    StatisticsVO memberStatistics(StatisticsVO statisticsVO);
 }

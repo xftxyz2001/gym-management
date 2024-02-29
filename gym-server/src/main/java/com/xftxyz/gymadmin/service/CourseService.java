@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Course;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface CourseService extends IService<Course> {
     Course getCourse(Long id);
 
     IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size);
+
+    StatisticsVO courseStatistics(StatisticsVO statisticsVO);
 }

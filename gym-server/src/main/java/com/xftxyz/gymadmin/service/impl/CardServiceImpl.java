@@ -12,10 +12,13 @@ import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,6 +89,28 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         LambdaQueryWrapper<Card> cardLambdaQueryWrapper = new LambdaQueryWrapper<>();
         cardLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Card::getMemberId, memberIdList);
         return baseMapper.selectPage(new Page<>(current, size), cardLambdaQueryWrapper);
+    }
+
+    @Override
+    public StatisticsVO cardStatistics(StatisticsVO statisticsVO) {
+        LambdaQueryWrapper<Card> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        Date from = statisticsVO.getFrom();
+        Date to = statisticsVO.getTo();
+        if (ObjectUtils.isEmpty(from) && ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        } else if (!ObjectUtils.isEmpty(from) && !ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.between(Card::getCreateTime, from, to);
+        } else if (!ObjectUtils.isEmpty(from)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.ge(Card::getCreateTime, from);
+        } else {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.le(Card::getCreateTime, to);
+        }
+        Long count = baseMapper.selectCount(lambdaQueryWrapper);
+        statisticsVO.setCount(BigDecimal.valueOf(count));
+        return statisticsVO;
     }
 }
 

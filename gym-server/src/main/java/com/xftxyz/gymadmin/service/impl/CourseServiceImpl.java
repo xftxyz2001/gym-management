@@ -12,10 +12,13 @@ import com.xftxyz.gymadmin.mapper.CourseMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CourseService;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,6 +97,28 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             lambdaQueryWrapper.in(!ObjectUtils.isEmpty(coachIdList), Course::getCoachId, coachIdList);
         }
         return baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+    }
+
+    @Override
+    public StatisticsVO courseStatistics(StatisticsVO statisticsVO) {
+        LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        Date from = statisticsVO.getFrom();
+        Date to = statisticsVO.getTo();
+        if (ObjectUtils.isEmpty(from) && ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        } else if (!ObjectUtils.isEmpty(from) && !ObjectUtils.isEmpty(to)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.between(Course::getCreateTime, from, to);
+        } else if (!ObjectUtils.isEmpty(from)) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.ge(Course::getCreateTime, from);
+        } else {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.le(Course::getCreateTime, to);
+        }
+        Long count = baseMapper.selectCount(lambdaQueryWrapper);
+        statisticsVO.setCount(BigDecimal.valueOf(count));
+        return statisticsVO;
     }
 }
 

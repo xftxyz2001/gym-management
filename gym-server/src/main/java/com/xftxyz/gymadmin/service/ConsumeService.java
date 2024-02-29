@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Consume;
 import com.xftxyz.gymadmin.vo.req.ListConsumeReq;
+import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ConsumeService extends IService<Consume> {
     Consume getConsume(Long id);
 
     IPage<Consume> listConsumes(ListConsumeReq listConsumeReq, Integer current, Integer size);
+
+    StatisticsVO incomeStatistics(StatisticsVO statisticsVO);
 }
