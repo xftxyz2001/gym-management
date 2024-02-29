@@ -12,7 +12,9 @@ import Finance from "../modules/finance";
 
 import Statistics from "../modules/statistics";
 
+import Business from "../modules/business";
+
 /** 登录后需要动态加入的本地路由 */
-const FrontRoutes = [...Dashboard, ...Member, ...Course, ...Points, ...Finance, ...Statistics];
+const FrontRoutes = [...Dashboard, ...Member, ...Course, ...Points, ...Finance, ...Statistics, ...Business];
 
 export default FrontRoutes;
