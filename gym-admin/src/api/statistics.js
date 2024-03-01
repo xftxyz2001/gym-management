@@ -1,6 +1,6 @@
 import request from "@/utils/system/request";
 
-export function memberStatistics(data) {
+export function memberStatistics(data = {}) {
   return request({
     url: "/api/statistics/member",
     method: "post",
@@ -8,7 +8,7 @@ export function memberStatistics(data) {
   });
 }
 
-export function cardStatistics(data) {
+export function cardStatistics(data = {}) {
   return request({
     url: "/api/statistics/card",
     method: "post",
@@ -16,7 +16,7 @@ export function cardStatistics(data) {
   });
 }
 
-export function courseStatistics(data) {
+export function courseStatistics(data = {}) {
   return request({
     url: "/api/statistics/course",
     method: "post",
@@ -24,7 +24,7 @@ export function courseStatistics(data) {
   });
 }
 
-export function incomeStatistics(data) {
+export function incomeStatistics(data = {}) {
   return request({
     url: "/api/statistics/income",
     method: "post",
