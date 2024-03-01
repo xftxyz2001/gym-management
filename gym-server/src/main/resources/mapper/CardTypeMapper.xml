@@ -8,7 +8,7 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="price" column="price" jdbcType="DECIMAL"/>
-        <result property="validTime" column="valid_time" jdbcType="TIMESTAMP"/>
+        <result property="validTime" column="valid_time" jdbcType="INTEGER"/>
         <result property="count" column="count" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>

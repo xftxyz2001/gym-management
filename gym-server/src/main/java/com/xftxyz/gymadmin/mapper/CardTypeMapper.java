@@ -6,7 +6,7 @@ import com.xftxyz.gymadmin.domain.CardType;
 /**
  * @author 25810
  * @description 针对表【card_type(卡类型信息)】的数据库操作Mapper
- * @createDate 2024-02-14 07:08:06
+ * @createDate 2024-03-01 23:25:02
  * @Entity com.xftxyz.gymadmin.domain.CardType
  */
 public interface CardTypeMapper extends BaseMapper<CardType> {

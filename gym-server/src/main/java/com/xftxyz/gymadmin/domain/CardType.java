@@ -34,13 +34,13 @@ public class CardType implements Serializable {
     private BigDecimal price;
 
     /**
-     * 有效期（持续时间）
+     * 有效期（天）
      */
     @TableField(value = "valid_time")
-    private Date validTime;
+    private Integer validTime;
 
     /**
-     * 次数
+     * 次数（-1为无限）
      */
     @TableField(value = "count")
     private Integer count;

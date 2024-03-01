@@ -35,8 +35,8 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="name" label="类型名称"></el-table-column>
-        <el-table-column prop="price" label="价格"></el-table-column>
-        <el-table-column prop="validTime" label="有效期"></el-table-column>
+        <el-table-column prop="price" label="价格（元）"></el-table-column>
+        <el-table-column prop="validTime" label="有效期（天）"></el-table-column>
         <el-table-column prop="count" label="次数"></el-table-column>
 
         <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true"></el-table-column>
@@ -66,10 +66,10 @@
         <el-form-item label="类型名称" prop="name">
           <el-input v-model="formModel.name" placeholder="请输入类型名称"></el-input>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
+        <el-form-item label="价格（元）" prop="price">
           <el-input v-model="formModel.price" placeholder="请输入价格"></el-input>
         </el-form-item>
-        <el-form-item label="有效期" prop="validTime">
+        <el-form-item label="有效期（天）" prop="validTime">
           <el-input v-model="formModel.validTime" placeholder="请输入有效期"></el-input>
         </el-form-item>
         <el-form-item label="次数" prop="count">
@@ -113,7 +113,7 @@ const formModel = ref({
   name: "",
   price: "",
   validTime: "",
-  count: ""
+  count: -1
 });
 
 // 分页参数, 供table使用
@@ -168,7 +168,7 @@ function openAddDialog() {
     name: "",
     price: "",
     validTime: "",
-    count: ""
+    count: -1
   };
 
   layer.title = "新增记录";

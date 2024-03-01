@@ -1,1 +1,3 @@
-<template>办卡</template>
+<template>
+  <div class="layout-container">办卡</div>
+</template>

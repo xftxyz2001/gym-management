@@ -1,18 +1,5 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost_3306
- Source Server Type    : MySQL
- Source Server Version : 80200 (8.2.0)
- Source Host           : localhost:3306
- Source Schema         : gym
-
- Target Server Type    : MySQL
- Target Server Version : 80200 (8.2.0)
- File Encoding         : 65001
-
- Date: 14/02/2024 07:05:40
-*/
+CREATE DATABASE IF NOT EXISTS gym;
+USE gym;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -68,8 +55,8 @@ CREATE TABLE `card_type`  (
   `id` bigint NOT NULL COMMENT '卡类型ID',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '卡类型名称',
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
-  `valid_time` datetime NULL DEFAULT NULL COMMENT '有效期（持续时间）',
-  `count` int NULL DEFAULT NULL COMMENT '次数',
+  `valid_time` int NULL DEFAULT NULL COMMENT '有效期（天）',
+  `count` int NULL DEFAULT NULL COMMENT '次数（-1为无限）',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',

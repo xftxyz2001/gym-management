@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author 25810
  * @description 针对表【card_type(卡类型信息)】的数据库操作Service
- * @createDate 2024-02-14 07:08:06
+ * @createDate 2024-03-01 23:25:02
  */
 public interface CardTypeService extends IService<CardType> {
 
