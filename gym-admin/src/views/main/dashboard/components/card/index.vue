@@ -5,7 +5,7 @@
 </template>
 
 <script lang="js">
-// import { hospitalStatistics, userStatistics, orderStatistics } from "@/api/statistics";
+import { memberStatistics, cardStatistics, courseStatistics, incomeStatistics } from "@/api/statistics";
 import { defineComponent, ref } from "vue";
 import Row from "./row.vue";
 export default defineComponent({
@@ -15,20 +15,23 @@ export default defineComponent({
   setup() {
     const list = ref([
       { id: 1, name: "注册会员", data: "0", color: "#4e73df", icon: "sfont system-yonghu" },
-      { id: 2, name: "教练数目", data: "0", color: "#1cc88a", icon: "sfont system-xiaoxi" },
+      { id: 2, name: "累计办卡", data: "0", color: "#1cc88a", icon: "sfont system-xiaoxi" },
       { id: 3, name: "课程数目", data: "0", color: "#36b9cc", icon: "sfont system-shuliang_mianxing" },
       { id: 4, name: "账单总额", data: "0", color: "#f6c23e", icon: "sfont system-jindutiaoshouyidaozhang" }
     ]);
-    // userStatistics().then(res => {
-    //   list.value[0].data = res.total;
-    // });
-    // hospitalStatistics().then(res => {
-    //   list.value[1].data = res.count;
-    // });
-    // orderStatistics().then(res => {
-    //   list.value[2].data = res.total;
-    //   list.value[3].data = res.totalAmount;
-    // });
+
+    memberStatistics().then(res => {
+      list.value[0].data = res.count;
+    });
+    cardStatistics().then(res => {
+      list.value[1].data = res.count;
+    });
+    courseStatistics().then(res => {
+      list.value[2].data = res.count;
+    });
+    incomeStatistics().then(res => {
+      list.value[3].data = res.count;
+    });
     return {
       list
     };

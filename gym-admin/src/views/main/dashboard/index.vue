@@ -3,6 +3,7 @@
     <div>欢迎使用健身房管理系统</div>
     <Card />
     <!-- <Charts /> -->
+    <Home />
   </div>
 </template>
 
@@ -10,10 +11,12 @@
 import { defineComponent } from "vue";
 import Card from "./components/card/index.vue";
 // import Charts from './components/charts/index.vue'
+import Home from "./components/home/index.vue";
 export default defineComponent({
   components: {
-    Card
+    Card,
     // Charts,
+    Home
   }
 });
 </script>
