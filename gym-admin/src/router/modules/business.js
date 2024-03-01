@@ -14,7 +14,8 @@ const route = [
         meta: { title: "训练项目", hideTabs: true }
       },
       {
-        path: "index",
+        name: "businessIndex",
+        path: "index/:id?",
         component: createNameComponent(() => import("@/views/main/business/index.vue")),
         meta: { title: "业务首页", hideTabs: true }
       }
