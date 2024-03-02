@@ -31,4 +31,6 @@ public interface CardService extends IService<Card> {
     StatisticsVO cardStatistics(StatisticsVO statisticsVO);
 
     Boolean register(RegisterReq registerReq);
+
+    Card getCardByContact(String contact);
 }

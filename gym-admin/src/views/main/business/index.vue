@@ -1,9 +1,19 @@
-<template>刷卡</template>
+<template>
+  <div class="layout-container">{{ card }}</div>
+</template>
 
 <script setup>
+import { getCard } from "@/api/member";
+import { ref } from "vue";
+
 import { useRoute } from "vue-router";
-
 const route = useRoute();
+const { id } = route.params;
 
-console.log(route.params.id);
+const card = ref({});
+if (id) {
+  getCard(id).then(res => {
+    card.value = res;
+  });
+}
 </script>

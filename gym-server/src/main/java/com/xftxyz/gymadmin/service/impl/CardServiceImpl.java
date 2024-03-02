@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -141,6 +142,23 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
             throw new BusinessException(ResultEnum.CARD_SAVE_FAILED);
         }
         return true;
+    }
+
+    @Override
+    public Card getCardByContact(String contact) {
+        LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Member::getContact, contact);
+        Member member = memberMapper.selectOne(lambdaQueryWrapper);
+        if (ObjectUtils.isEmpty(member)) {
+            throw new BusinessException(ResultEnum.MEMBER_NOT_EXIST);
+        }
+        LambdaQueryWrapper<Card> cardLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        cardLambdaQueryWrapper.eq(Card::getMemberId, member.getId());
+        List<Card> cards = baseMapper.selectList(cardLambdaQueryWrapper);
+        if (ObjectUtils.isEmpty(cards)) {
+            throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
+        }
+        return cards.stream().min(Comparator.comparing(Card::getValidTime)).get();
     }
 }
 

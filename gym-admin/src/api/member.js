@@ -47,6 +47,13 @@ export function listMembers(data, current, size) {
   });
 }
 
+export function getMemberByContact(contact) {
+  return request({
+    url: `/api/member/contact/${contact}`,
+    method: "get"
+  });
+}
+
 export function saveCard(data) {
   return request({
     url: "/api/member/card",
@@ -91,6 +98,13 @@ export function listCards(data, current, size) {
     method: "post",
     params: { current, size },
     data
+  });
+}
+
+export function getCardByContact(contact) {
+  return request({
+    url: `/api/member/card/contact/${contact}`,
+    method: "get"
   });
 }
 

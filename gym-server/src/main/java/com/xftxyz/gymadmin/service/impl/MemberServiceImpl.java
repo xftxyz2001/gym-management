@@ -108,6 +108,17 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         statisticsVO.setCount(BigDecimal.valueOf(count));
         return statisticsVO;
     }
+
+    @Override
+    public Member getMemberByContact(String contact) {
+        LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Member::getContact, contact);
+        Member member = baseMapper.selectOne(lambdaQueryWrapper);
+        if (ObjectUtils.isEmpty(member)) {
+            throw new BusinessException(ResultEnum.MEMBER_NOT_EXIST);
+        }
+        return member;
+    }
 }
 
 

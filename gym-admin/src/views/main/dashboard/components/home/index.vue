@@ -7,6 +7,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { getMemberByContact, getCardByContact } from "@/api/member";
 import { ElButton, ElMessageBox } from "element-plus";
 
 import { useRouter } from "vue-router";
@@ -14,6 +15,14 @@ const router = useRouter();
 
 const cbt1 = ref("非会员进入");
 const cbt2 = ref("无卡进入");
+
+function goBusinessRegister(id) {
+  router.push({ name: "businessRegister", params: { id } });
+}
+
+function goBusinessIndex(id) {
+  router.push({ name: "businessIndex", params: { id } });
+}
 
 function handleRegisterCard() {
   // 弹出输入框，输入手机号
@@ -30,7 +39,27 @@ function handleRegisterCard() {
     }
   })
     .then(({ value }) => {
-      router.push({ name: "businessRegister", params: { contact: value } });
+      if (cbt1.value === "确定") {
+        getMemberByContact(value)
+          .then(res => {
+            goBusinessRegister(res.id);
+          })
+          .catch(() => {
+            ElMessageBox.confirm("还不是会员，以非会员身份进入？", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消"
+            })
+              .then(() => {
+                goBusinessRegister();
+              })
+              .catch(() => {
+                cbt1.value = "非会员进入";
+              });
+          });
+      } else {
+        cbt1.value = "非会员进入";
+        goBusinessRegister();
+      }
     })
     .catch(() => {
       cbt1.value = "非会员进入";
@@ -52,7 +81,27 @@ function handleLoginCard() {
     }
   })
     .then(({ value }) => {
-      router.push({ name: "businessIndex", params: { id: value } });
+      if (cbt2.value === "确定") {
+        getCardByContact(value)
+          .then(res => {
+            goBusinessIndex(res.id);
+          })
+          .catch(() => {
+            ElMessageBox.confirm("还没有办卡，以无卡身份进入？", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消"
+            })
+              .then(() => {
+                goBusinessIndex();
+              })
+              .catch(() => {
+                cbt2.value = "无卡进入";
+              });
+          });
+      } else {
+        cbt2.value = "无卡进入";
+        goBusinessIndex();
+      }
     })
     .catch(() => {
       cbt2.value = "无卡进入";

@@ -28,4 +28,6 @@ public interface MemberService extends IService<Member> {
     IPage<Member> listMembers(ListMemberReq listMemberReq, Integer current, Integer size);
 
     StatisticsVO memberStatistics(StatisticsVO statisticsVO);
+
+    Member getMemberByContact(String contact);
 }

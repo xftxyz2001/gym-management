@@ -10,7 +10,7 @@ const route = [
     children: [
       {
         name: "businessRegister",
-        path: "register",
+        path: "register/:id?",
         component: createNameComponent(() => import("@/views/main/business/register.vue")),
         meta: { title: "训练项目", hideTabs: true }
       },

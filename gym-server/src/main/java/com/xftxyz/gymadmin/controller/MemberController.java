@@ -67,6 +67,12 @@ public class MemberController {
         return memberService.listMembers(listMemberReq, current, size);
     }
 
+    // 通过手机号查询会员
+    @GetMapping("/contact/{contact}")
+    public Member getMemberByContact(@PathVariable("contact") @NotNull String contact) {
+        return memberService.getMemberByContact(contact);
+    }
+
 
     // 办卡
     @PostMapping("/register")
@@ -110,6 +116,12 @@ public class MemberController {
                                  @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
                                  @RequestBody ListCardReq listCardReq) {
         return cardService.listCards(listCardReq, current, size);
+    }
+
+    // 根据会员联系方式获取一张会员卡
+    @GetMapping("/card/contact/{contact}")
+    public Card getCardByContact(@PathVariable("contact") @NotNull String contact) {
+        return cardService.getCardByContact(contact);
     }
 
 
