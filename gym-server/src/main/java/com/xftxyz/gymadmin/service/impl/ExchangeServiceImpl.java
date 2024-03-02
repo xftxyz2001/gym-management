@@ -58,6 +58,14 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeMapper, Exchange>
     }
 
     @Override
+    public Boolean saveExchange(Exchange exchange) {
+        if (baseMapper.insert(exchange) <= 0) {
+            throw new BusinessException(ResultEnum.EXCHANGE_SAVE_FAILED);
+        }
+        return true;
+    }
+
+    @Override
     public Boolean removeExchange(Long id) {
         if (baseMapper.deleteById(id) <= 0) {
             throw new BusinessException(ResultEnum.EXCHANGE_REMOVE_FAILED);
@@ -93,6 +101,18 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeMapper, Exchange>
         LambdaQueryWrapper<Exchange> exchangeLambdaQueryWrapper = new LambdaQueryWrapper<>();
         exchangeLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Exchange::getMemberId, memberIdList);
         return baseMapper.selectPage(new Page<>(current, size), exchangeLambdaQueryWrapper);
+    }
+
+    @Override
+    public Boolean updateExchange(Exchange exchange) {
+        Exchange existExchange = baseMapper.selectById(exchange.getId());
+        if (ObjectUtils.isEmpty(existExchange)) {
+            throw new BusinessException(ResultEnum.EXCHANGE_NOT_EXIST);
+        }
+        if (baseMapper.updateById(exchange) <= 0) {
+            throw new BusinessException(ResultEnum.EXCHANGE_UPDATE_FAILED);
+        }
+        return true;
     }
 }
 

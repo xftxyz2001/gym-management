@@ -49,6 +49,14 @@ export function listRewards(data, current, size) {
 
 export function exchangeReward(data) {
   return request({
+    url: "/api/points/er",
+    method: "post",
+    data
+  });
+}
+
+export function saveExchange(data) {
+  return request({
     url: "/api/points/exchange",
     method: "post",
     data
@@ -66,6 +74,14 @@ export function removeExchanges(data) {
   return request({
     url: "/api/points/exchanges",
     method: "delete",
+    data
+  });
+}
+
+export function updateExchange(data) {
+  return request({
+    url: "/api/points/exchange",
+    method: "put",
     data
   });
 }

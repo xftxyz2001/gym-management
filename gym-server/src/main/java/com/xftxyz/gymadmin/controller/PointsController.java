@@ -65,9 +65,15 @@ public class PointsController {
 
 
     // 兑换奖励
-    @PostMapping("/exchange")
+    @PostMapping("/er")
     public Boolean exchangeReward(@RequestBody @NotNull ExchangeReq exchangeReq) {
         return exchangeService.exchangeReward(exchangeReq);
+    }
+
+    // 新增兑换记录
+    @PostMapping("/exchange")
+    public Boolean saveExchange(@RequestBody @NotNull Exchange exchange) {
+        return exchangeService.saveExchange(exchange);
     }
 
     // 删除兑换记录
@@ -80,6 +86,12 @@ public class PointsController {
     @DeleteMapping("/exchanges")
     public Boolean removeExchanges(@RequestBody @NotNull List<Long> idList) {
         return exchangeService.removeExchanges(idList);
+    }
+
+    // 更新兑换记录
+    @PutMapping("/exchange")
+    public Boolean updateExchange(@RequestBody @NotNull Exchange exchange) {
+        return exchangeService.updateExchange(exchange);
     }
 
     // 查询兑换记录

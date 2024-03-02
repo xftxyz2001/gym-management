@@ -79,7 +79,12 @@
           <el-input v-model="formModel.cardType" placeholder="请输入卡类型ID"></el-input>
         </el-form-item>
         <el-form-item label="有效期（至）" prop="validTime">
-          <el-date-picker v-model="formModel.validTime" type="date" placeholder="选择日期" value-format="YYYY-MM-DD"></el-date-picker>
+          <el-date-picker
+            v-model="formModel.validTime"
+            type="date"
+            placeholder="选择日期"
+            value-format="YYYY-MM-DD"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="总次数/金额" prop="total">
           <el-input v-model="formModel.total" placeholder="请输入总次数/金额"></el-input>

@@ -43,7 +43,7 @@
 
         <el-table-column label="操作">
           <template v-slot="scope">
-            <!-- <el-button type="primary" @click="openEditDialog(scope.row)">修改</el-button> -->
+            <el-button type="primary" @click="openEditDialog(scope.row)">修改</el-button>
             <el-popconfirm
               title="确定删除吗？"
               @confirm="deleteOne(scope.row)"
@@ -65,8 +65,11 @@
         <el-form-item label="会员ID" prop="memberId">
           <el-input v-model="formModel.memberId" placeholder="请输入会员ID"></el-input>
         </el-form-item>
-        <el-form-item label="兑换物品ID" prop="exchangeId">
-          <el-input v-model="formModel.exchangeId" placeholder="请输入兑换物品ID"></el-input>
+        <el-form-item label="兑换物品名称" prop="name">
+          <el-input v-model="formModel.name" placeholder="请输入兑换物品名称"></el-input>
+        </el-form-item>
+        <el-form-item label="兑换消耗积分" prop="points">
+          <el-input v-model="formModel.points" placeholder="请输入兑换消耗积分"></el-input>
         </el-form-item>
       </el-form>
     </Layer>
@@ -74,7 +77,14 @@
 </template>
 
 <script setup>
-import { exchangeReward, removeExchange, removeExchanges, getExchange, listExchanges } from "@/api/points";
+import {
+  saveExchange,
+  removeExchange,
+  removeExchanges,
+  updateExchange,
+  getExchange,
+  listExchanges
+} from "@/api/points";
 import Layer from "@/components/layer/index.vue";
 import Table from "@/components/table/index.vue";
 import { Delete, Plus, Search } from "@element-plus/icons";
@@ -97,7 +107,8 @@ const layer = reactive({
 // 弹窗表单数据
 const formModel = ref({
   memberId: "",
-  exchangeId: ""
+  name: "",
+  points: 0
 });
 
 // 分页参数, 供table使用
@@ -150,7 +161,8 @@ function deleteOne(row) {
 function openAddDialog() {
   formModel.value = {
     memberId: "",
-    exchangeId: ""
+    name: "",
+    points: 0
   };
 
   layer.title = "新增记录";
@@ -158,34 +170,34 @@ function openAddDialog() {
   layer.showButton = true;
 }
 
-// function openEditDialog(row) {
-//   getExchange(row.id).then(res => {
-//     formModel.value = JSON.parse(JSON.stringify(res));
-//     layer.title = "编辑记录";
-//     layer.show = true;
-//     layer.showButton = true;
-//   });
-// }
+function openEditDialog(row) {
+  getExchange(row.id).then(res => {
+    formModel.value = JSON.parse(JSON.stringify(res));
+    layer.title = "编辑记录";
+    layer.show = true;
+    layer.showButton = true;
+  });
+}
 
 // 提交新增/修改
 function submit() {
-  // if (formModel.value.id) {
-  //   updateExchange(formModel.value).then(() => {
-  //     ElMessage.success("修改成功");
-  //     layer.show = false;
-  //     getTableData();
-  //   });
-  // } else {
-  //   exchangeReward(formModel.value).then(() => {
-  //     ElMessage.success("新增成功");
-  //     layer.show = false;
-  //     getTableData();
-  //   });
-  // }
-  exchangeReward(formModel.value).then(() => {
-    ElMessage.success("新增成功");
-    layer.show = false;
-    getTableData();
-  });
+  if (formModel.value.id) {
+    updateExchange(formModel.value).then(() => {
+      ElMessage.success("修改成功");
+      layer.show = false;
+      getTableData();
+    });
+  } else {
+    saveExchange(formModel.value).then(() => {
+      ElMessage.success("新增成功");
+      layer.show = false;
+      getTableData();
+    });
+  }
+  // exchangeReward(formModel.value).then(() => {
+  //   ElMessage.success("新增成功");
+  //   layer.show = false;
+  //   getTableData();
+  // });
 }
 </script>

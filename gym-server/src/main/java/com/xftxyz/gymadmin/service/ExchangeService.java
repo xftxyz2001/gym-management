@@ -17,6 +17,8 @@ public interface ExchangeService extends IService<Exchange> {
 
     Boolean exchangeReward(ExchangeReq exchangeReq);
 
+    Boolean saveExchange(Exchange exchange);
+
     Boolean removeExchange(Long id);
 
     Boolean removeExchanges(List<Long> idList);
@@ -24,4 +26,6 @@ public interface ExchangeService extends IService<Exchange> {
     Exchange getExchange(Long id);
 
     IPage<Exchange> listExchanges(ListExchangeReq listExchangeReq, Integer current, Integer size);
+
+    Boolean updateExchange(Exchange exchange);
 }
