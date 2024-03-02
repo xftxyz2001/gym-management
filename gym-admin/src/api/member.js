@@ -54,6 +54,14 @@ export function getMemberByContact(contact) {
   });
 }
 
+export function register(data) {
+  return request({
+    url: "/api/member/register",
+    method: "post",
+    data
+  });
+}
+
 export function saveCard(data) {
   return request({
     url: "/api/member/card",
@@ -152,5 +160,13 @@ export function listCardTypes(data, current, size) {
     method: "post",
     params: { current, size },
     data
+  });
+}
+
+export function listCardTypesByName(name) {
+  return request({
+    url: "/api/member/cardTypes/list",
+    method: "get",
+    params: { name }
   });
 }

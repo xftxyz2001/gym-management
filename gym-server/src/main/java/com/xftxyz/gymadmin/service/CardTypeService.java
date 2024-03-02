@@ -24,4 +24,6 @@ public interface CardTypeService extends IService<CardType> {
     CardType getCardType(Long id);
 
     IPage<CardType> listCardTypes(Integer current, Integer size);
+
+    List<CardType> listCardTypesByName(String name);
 }

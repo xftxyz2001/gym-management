@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.gymadmin.domain.Card;
 import com.xftxyz.gymadmin.domain.CardType;
+import com.xftxyz.gymadmin.domain.Consume;
 import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.exception.BusinessException;
 import com.xftxyz.gymadmin.helper.DateHelper;
@@ -15,6 +16,7 @@ import com.xftxyz.gymadmin.mapper.CardTypeMapper;
 import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
+import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.RegisterReq;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
@@ -39,6 +41,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
 
     private final MemberMapper memberMapper;
     private final CardTypeMapper cardTypeMapper;
+    private final ConsumeService consumeService;
 
     @Override
     public Boolean saveCard(Card card) {
@@ -133,14 +136,35 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         if (ObjectUtils.isEmpty(cardType)) {
             throw new BusinessException(ResultEnum.CARD_TYPE_NOT_EXIST);
         }
+
+        // 保存会员卡
         Card card = new Card();
         card.setMemberId(memberId);
         card.setCardType(cardTypeId);
         card.setValidTime(DateHelper.getAfterDays(new Date(), cardType.getValidTime()));
         card.setTotal(cardType.getCount());
         card.setRemain(cardType.getCount());
+        card.setStatus(Card.STATUS_NORMAL);
         if (baseMapper.insert(card) <= 0) {
             throw new BusinessException(ResultEnum.CARD_SAVE_FAILED);
+        }
+
+        // 保存消费记录
+        Consume consume = new Consume();
+        consume.setMemberId(memberId);
+        consume.setCtype(Consume.CTYPE_CARD);
+        consume.setCitem(cardTypeId);
+        consume.setPayType(registerReq.getPayType());
+        consume.setAmount(cardType.getPrice());
+        consume.setStatus(Consume.STATUS_PAID);
+        if (!consumeService.saveConsume(consume)) {
+            throw new BusinessException(ResultEnum.CONSUME_SAVE_FAILED);
+        }
+
+        // 更新会员积分
+        member.setPoints(member.getPoints() + consume.getAmount().intValue());
+        if (memberMapper.updateById(member) <= 0) {
+            throw new BusinessException(ResultEnum.MEMBER_UPDATE_FAILED);
         }
         return true;
     }

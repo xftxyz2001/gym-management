@@ -162,4 +162,10 @@ public class MemberController {
         return cardTypeService.listCardTypes(current, size);
     }
 
+    // 获取会员卡类型列表
+    @GetMapping("/cardTypes/list")
+    public List<CardType> listCardTypesByName(@RequestParam(value = "name") @NotNull String name) {
+        return cardTypeService.listCardTypesByName(name);
+    }
+
 }

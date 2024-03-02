@@ -7,4 +7,5 @@ public class RegisterReq {
 
     private Long memberId;
     private Long cardTypeId;
+    private Integer payType;
 }

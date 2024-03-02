@@ -15,6 +15,18 @@ import java.util.Date;
 @TableName(value = "consume")
 @Data
 public class Consume implements Serializable {
+
+    public static final int CTYPE_CARD = 0;
+    public static final int CTYPE_COURSE = 1;
+
+    public static final int PAY_TYPE_CASH = 0;
+    public static final int PAY_TYPE_CARD = 1;
+    public static final int PAY_TYPE_ALIPAY = 2;
+    public static final int PAY_TYPE_WECHAT = 3;
+
+    public static final int STATUS_PAID = 0;
+    public static final int STATUS_REFUND = 1;
+    public static final int STATUS_COMPLETED = 2;
     /**
      * 消费记录ID
      */

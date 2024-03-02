@@ -78,6 +78,13 @@ public class CardTypeServiceImpl extends ServiceImpl<CardTypeMapper, CardType>
     public IPage<CardType> listCardTypes(Integer current, Integer size) {
         return baseMapper.selectPage(new Page<>(current, size), null);
     }
+
+    @Override
+    public List<CardType> listCardTypesByName(String name) {
+        LambdaQueryWrapper<CardType> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(CardType::getName, name);
+        return baseMapper.selectList(lambdaQueryWrapper);
+    }
 }
 
 

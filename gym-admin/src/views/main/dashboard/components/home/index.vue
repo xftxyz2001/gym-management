@@ -7,17 +7,20 @@
 
 <script setup>
 import { ref } from "vue";
-import { getMemberByContact, getCardByContact } from "@/api/member";
-import { ElButton, ElMessageBox } from "element-plus";
+import { getMemberByContact, getCard, getCardByContact } from "@/api/member";
+import { ElButton, ElMessage, ElMessageBox } from "element-plus";
 
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-const cbt1 = ref("非会员进入");
-const cbt2 = ref("无卡进入");
+const confirmButtonText = ref("前往添加会员信息");
 
 function goBusinessRegister(id) {
   router.push({ name: "businessRegister", params: { id } });
+}
+
+function gotoMemberMember() {
+  router.push("/member/member");
 }
 
 function goBusinessIndex(id) {
@@ -27,85 +30,65 @@ function goBusinessIndex(id) {
 function handleRegisterCard() {
   // 弹出输入框，输入手机号
   ElMessageBox.prompt("请输入手机号", "提示", {
-    confirmButtonText: cbt1,
+    confirmButtonText: confirmButtonText,
     cancelButtonText: "取消",
     inputValidator: value => {
       if (value) {
-        cbt1.value = "确定";
+        confirmButtonText.value = "确定";
       } else {
-        cbt1.value = "非会员进入";
+        confirmButtonText.value = "前往添加会员信息";
       }
       return true;
     }
   })
     .then(({ value }) => {
-      if (cbt1.value === "确定") {
+      if (confirmButtonText.value === "确定") {
         getMemberByContact(value)
           .then(res => {
             goBusinessRegister(res.id);
           })
           .catch(() => {
-            ElMessageBox.confirm("还不是会员，以非会员身份进入？", "提示", {
+            ElMessageBox.confirm("还不是会员，前往添加会员信息？", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消"
             })
               .then(() => {
-                goBusinessRegister();
+                gotoMemberMember();
               })
               .catch(() => {
-                cbt1.value = "非会员进入";
+                confirmButtonText.value = "前往添加会员信息";
               });
           });
       } else {
-        cbt1.value = "非会员进入";
-        goBusinessRegister();
+        confirmButtonText.value = "前往添加会员信息";
+        gotoMemberMember();
       }
     })
     .catch(() => {
-      cbt1.value = "非会员进入";
+      confirmButtonText.value = "前往添加会员信息";
     });
 }
 
 function handleLoginCard() {
   // 弹出输入框，输入卡号/手机号
   ElMessageBox.prompt("请输入卡号/手机号", "提示", {
-    confirmButtonText: cbt2,
-    cancelButtonText: "取消",
-    inputValidator: value => {
-      if (value) {
-        cbt2.value = "确定";
-      } else {
-        cbt2.value = "无卡进入";
-      }
-      return true;
-    }
-  })
-    .then(({ value }) => {
-      if (cbt2.value === "确定") {
+    confirmButtonText: "确认",
+    cancelButtonText: "取消"
+  }).then(({ value }) => {
+    getCard(value)
+      .then(res => {
+        goBusinessIndex(res.id);
+      })
+      .catch(() => {
         getCardByContact(value)
           .then(res => {
             goBusinessIndex(res.id);
           })
           .catch(() => {
-            ElMessageBox.confirm("还没有办卡，以无卡身份进入？", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消"
-            })
-              .then(() => {
-                goBusinessIndex();
-              })
-              .catch(() => {
-                cbt2.value = "无卡进入";
-              });
+            ElMessage.error("卡号/手机号不存在");
           });
-      } else {
-        cbt2.value = "无卡进入";
-        goBusinessIndex();
-      }
-    })
-    .catch(() => {
-      cbt2.value = "无卡进入";
-    });
+      });
+  });
 }
 </script>
 
