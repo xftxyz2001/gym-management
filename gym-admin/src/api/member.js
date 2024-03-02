@@ -170,3 +170,10 @@ export function listCardTypesByName(name) {
     params: { name }
   });
 }
+
+export function login(id) {
+  return request({
+    url: `/api/member/login/${id}`,
+    method: "post"
+  });
+}
