@@ -11,17 +11,28 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 function handleRegisterCard() {
-  router.push("/business/register");
+  // 弹出输入框，输入手机号
+  ElMessageBox.prompt("请输入手机号", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "非会员进入"
+  })
+    .then(({ value }) => {
+      router.push({ name: "businessRegister", params: { contact: value } });
+    })
+    .catch(() => {
+      router.push({ name: "businessRegister" });
+    });
 }
 
 function handleLoginCard() {
   // 弹出输入框，输入卡号/手机号
   ElMessageBox.prompt("请输入卡号/手机号", "提示", {
     confirmButtonText: "确定",
-    cancelButtonText: "取消"
+    cancelButtonText: "无卡进入"
   }).then(({ value }) => {
-    // 确认后跳转到刷卡页面
     router.push({ name: "businessIndex", params: { id: value } });
+  }).catch(() => {
+    router.push({ name: "businessIndex" });
   });
 }
 </script>
