@@ -19,6 +19,7 @@ import com.xftxyz.gymadmin.service.CardService;
 import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.RegisterReq;
+import com.xftxyz.gymadmin.vo.resp.MemberLoginResp;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -210,6 +211,37 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         lambdaUpdateWrapper.lt(Card::getValidTime, new Date());
         lambdaUpdateWrapper.set(Card::getStatus, Card.STATUS_EXPIRED);
         baseMapper.update(null, lambdaUpdateWrapper);
+    }
+
+    @Override
+    public MemberLoginResp login(Long id) {
+        Card card = baseMapper.selectById(id);
+        if (ObjectUtils.isEmpty(card)) {
+            throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
+        }
+        Member member = memberMapper.selectById(card.getMemberId());
+        // if (ObjectUtils.isEmpty(member)) {
+        //     throw new BusinessException(ResultEnum.MEMBER_NOT_EXIST);
+        // }
+        CardType cardType = cardTypeMapper.selectById(card.getCardType());
+        // if (ObjectUtils.isEmpty(cardType)) {
+        //     throw new BusinessException(ResultEnum.CARD_TYPE_NOT_EXIST);
+        // }
+        MemberLoginResp memberLoginResp = new MemberLoginResp();
+        memberLoginResp.setCardType(cardType.getName());
+        memberLoginResp.setValidTime(card.getValidTime());
+        memberLoginResp.setRemain(card.getRemain());
+        memberLoginResp.setName(member.getName());
+        memberLoginResp.setGender(member.getGender());
+        memberLoginResp.setBirthday(member.getBirthday());
+        memberLoginResp.setHeight(member.getHeight());
+        memberLoginResp.setWeight(member.getWeight());
+        memberLoginResp.setBodyType(member.getBodyType());
+        memberLoginResp.setContact(member.getContact());
+        memberLoginResp.setAddress(member.getAddress());
+        memberLoginResp.setPoints(member.getPoints());
+
+        return memberLoginResp;
     }
 }
 

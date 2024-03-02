@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Card;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.RegisterReq;
+import com.xftxyz.gymadmin.vo.resp.MemberLoginResp;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
 import java.util.List;
@@ -35,4 +36,6 @@ public interface CardService extends IService<Card> {
     Card getCardByContact(String contact);
 
     void checkCardStatus();
+
+    MemberLoginResp login(Long id);
 }

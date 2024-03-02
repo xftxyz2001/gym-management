@@ -10,6 +10,7 @@ import com.xftxyz.gymadmin.service.MemberService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.ListMemberReq;
 import com.xftxyz.gymadmin.vo.req.RegisterReq;
+import com.xftxyz.gymadmin.vo.resp.MemberLoginResp;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -167,5 +168,12 @@ public class MemberController {
     public List<CardType> listCardTypesByName(@RequestParam(value = "name") @NotNull String name) {
         return cardTypeService.listCardTypesByName(name);
     }
+
+    // 刷卡
+    @PostMapping("/login/{id}")
+    public MemberLoginResp login(@PathVariable("id") @Min(1) Long id) {
+        return cardService.login(id);
+    }
+
 
 }
