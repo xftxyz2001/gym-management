@@ -1,6 +1,7 @@
 package com.xftxyz.gymadmin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -158,7 +159,33 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         if (ObjectUtils.isEmpty(cards)) {
             throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
         }
-        return cards.stream().min(Comparator.comparing(Card::getValidTime)).get();
+        cards.sort(Comparator.comparing(Card::getValidTime));
+
+        for (Card card : cards) {
+            if (card.getStatus() != Card.STATUS_NORMAL) {
+                continue;
+            }
+            if (card.getRemain() < 0) {
+                return card;
+            }
+            if (card.getRemain() > 0) {
+                card.setRemain(card.getRemain() - 1);
+                if (baseMapper.updateById(card) <= 0) {
+                    throw new BusinessException(ResultEnum.CARD_UPDATE_FAILED);
+                }
+                return card;
+            }
+        }
+        return cards.getLast();
+    }
+
+    @Override
+    public void checkCardStatus() {
+        // 将所有过期的会员卡状态设置为过期
+        LambdaUpdateWrapper<Card> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.lt(Card::getValidTime, new Date());
+        lambdaUpdateWrapper.set(Card::getStatus, Card.STATUS_EXPIRED);
+        baseMapper.update(null, lambdaUpdateWrapper);
     }
 }
 

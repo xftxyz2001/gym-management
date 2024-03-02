@@ -15,6 +15,11 @@ import java.util.Date;
 @TableName(value = "card")
 @Data
 public class Card implements Serializable {
+
+    public static final int STATUS_NORMAL = 0;
+    public static final int STATUS_EXPIRED = 1;
+    public static final int STATUS_CANCELLED = -1;
+
     /**
      * 卡ID
      */

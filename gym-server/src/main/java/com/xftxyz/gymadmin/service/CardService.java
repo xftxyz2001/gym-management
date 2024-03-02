@@ -33,4 +33,6 @@ public interface CardService extends IService<Card> {
     Boolean register(RegisterReq registerReq);
 
     Card getCardByContact(String contact);
+
+    void checkCardStatus();
 }
