@@ -6,34 +6,57 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { ElButton, ElMessageBox } from "element-plus";
+
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const cbt1 = ref("非会员进入");
+const cbt2 = ref("无卡进入");
 
 function handleRegisterCard() {
   // 弹出输入框，输入手机号
   ElMessageBox.prompt("请输入手机号", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "非会员进入"
+    confirmButtonText: cbt1,
+    cancelButtonText: "取消",
+    inputValidator: value => {
+      if (value) {
+        cbt1.value = "确定";
+      } else {
+        cbt1.value = "非会员进入";
+      }
+      return true;
+    }
   })
     .then(({ value }) => {
       router.push({ name: "businessRegister", params: { contact: value } });
     })
     .catch(() => {
-      router.push({ name: "businessRegister" });
+      cbt1.value = "非会员进入";
     });
 }
 
 function handleLoginCard() {
   // 弹出输入框，输入卡号/手机号
   ElMessageBox.prompt("请输入卡号/手机号", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "无卡进入"
-  }).then(({ value }) => {
-    router.push({ name: "businessIndex", params: { id: value } });
-  }).catch(() => {
-    router.push({ name: "businessIndex" });
-  });
+    confirmButtonText: cbt2,
+    cancelButtonText: "取消",
+    inputValidator: value => {
+      if (value) {
+        cbt2.value = "确定";
+      } else {
+        cbt2.value = "无卡进入";
+      }
+      return true;
+    }
+  })
+    .then(({ value }) => {
+      router.push({ name: "businessIndex", params: { id: value } });
+    })
+    .catch(() => {
+      cbt2.value = "无卡进入";
+    });
 }
 </script>
 
