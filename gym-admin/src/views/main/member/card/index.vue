@@ -37,7 +37,7 @@
         <el-table-column prop="memberId" label="所属会员ID"></el-table-column>
         <el-table-column prop="cardType" label="卡类型ID"></el-table-column>
 
-        <el-table-column prop="validTime" label="有效期"></el-table-column>
+        <el-table-column prop="validTime" label="有效期（至）"></el-table-column>
         <el-table-column prop="total" label="总次数/金额"></el-table-column>
         <el-table-column prop="remain" label="剩余次数/金额"></el-table-column>
         <el-table-column prop="status" label="状态">
@@ -78,8 +78,8 @@
         <el-form-item label="卡类型ID" prop="cardType">
           <el-input v-model="formModel.cardType" placeholder="请输入卡类型ID"></el-input>
         </el-form-item>
-        <el-form-item label="有效期" prop="validTime">
-          <el-input v-model="formModel.validTime" placeholder="请输入有效期"></el-input>
+        <el-form-item label="有效期（至）" prop="validTime">
+          <el-date-picker v-model="formModel.validTime" type="date" placeholder="选择日期" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="总次数/金额" prop="total">
           <el-input v-model="formModel.total" placeholder="请输入总次数/金额"></el-input>

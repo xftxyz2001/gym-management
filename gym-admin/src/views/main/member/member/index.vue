@@ -79,7 +79,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="出生日期" prop="birthday">
-          <el-date-picker v-model="formModel.birthday" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="formModel.birthday" type="date" placeholder="选择日期" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="身高" prop="height">
           <el-input v-model="formModel.height" placeholder="请输入身高"></el-input>

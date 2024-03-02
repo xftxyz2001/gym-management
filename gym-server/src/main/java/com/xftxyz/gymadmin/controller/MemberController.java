@@ -9,6 +9,7 @@ import com.xftxyz.gymadmin.service.CardTypeService;
 import com.xftxyz.gymadmin.service.MemberService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.ListMemberReq;
+import com.xftxyz.gymadmin.vo.req.RegisterReq;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -66,6 +67,12 @@ public class MemberController {
         return memberService.listMembers(listMemberReq, current, size);
     }
 
+
+    // 办卡
+    @PostMapping("/register")
+    public Boolean register(@RequestBody @NotNull RegisterReq registerReq) {
+        return cardService.register(registerReq);
+    }
 
     // 新增会员卡
     @PostMapping("/card")

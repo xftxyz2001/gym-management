@@ -1,6 +1,7 @@
 package com.xftxyz.gymadmin.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -35,6 +36,7 @@ public class Card implements Serializable {
     /**
      * 有效期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @TableField(value = "valid_time")
     private Date validTime;
 

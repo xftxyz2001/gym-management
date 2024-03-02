@@ -15,6 +15,7 @@ import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
+import com.xftxyz.gymadmin.vo.req.RegisterReq;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,20 +40,6 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
 
     @Override
     public Boolean saveCard(Card card) {
-        Long cardTypeId = card.getCardType();
-        CardType cardType = cardTypeMapper.selectById(cardTypeId);
-        if (ObjectUtils.isEmpty(cardType)) {
-            throw new BusinessException(ResultEnum.CARD_TYPE_NOT_EXIST);
-        }
-        if (ObjectUtils.isEmpty(card.getValidTime())) {
-            card.setValidTime(DateHelper.getAfterDays(new Date(), cardType.getValidTime()));
-        }
-        if (ObjectUtils.isEmpty(card.getTotal())) {
-            card.setTotal(cardType.getCount());
-        }
-        if (ObjectUtils.isEmpty(card.getRemain())) {
-            card.setRemain(cardType.getCount());
-        }
         if (baseMapper.insert(card) <= 0) {
             throw new BusinessException(ResultEnum.CARD_SAVE_FAILED);
         }
@@ -129,6 +116,31 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         Long count = baseMapper.selectCount(lambdaQueryWrapper);
         statisticsVO.setCount(BigDecimal.valueOf(count));
         return statisticsVO;
+    }
+
+    @Override
+    public Boolean register(RegisterReq registerReq) {
+        Long memberId = registerReq.getMemberId();
+        Long cardTypeId = registerReq.getCardTypeId();
+
+        Member member = memberMapper.selectById(memberId);
+        if (ObjectUtils.isEmpty(member)) {
+            throw new BusinessException(ResultEnum.MEMBER_NOT_EXIST);
+        }
+        CardType cardType = cardTypeMapper.selectById(cardTypeId);
+        if (ObjectUtils.isEmpty(cardType)) {
+            throw new BusinessException(ResultEnum.CARD_TYPE_NOT_EXIST);
+        }
+        Card card = new Card();
+        card.setMemberId(memberId);
+        card.setCardType(cardTypeId);
+        card.setValidTime(DateHelper.getAfterDays(new Date(), cardType.getValidTime()));
+        card.setTotal(cardType.getCount());
+        card.setRemain(cardType.getCount());
+        if (baseMapper.insert(card) <= 0) {
+            throw new BusinessException(ResultEnum.CARD_SAVE_FAILED);
+        }
+        return true;
     }
 }
 

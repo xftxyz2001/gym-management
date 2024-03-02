@@ -59,7 +59,10 @@
         <el-table-column prop="amount" label="消费金额"></el-table-column>
         <el-table-column prop="status" label="消费状态">
           <template v-slot="scope">
-            {{ scope.row.status === 0 ? "已支付" : scope.row.status === 1 ? "转入退款" : "已完成" }}
+            <!-- {{ scope.row.status === 0 ? "已支付" : scope.row.status === 1 ? "转入退款" : "已完成" }} -->
+            <el-tag v-if="scope.row.status === 0" type="success">已支付</el-tag>
+            <el-tag v-else-if="scope.row.status === 1" type="danger">转入退款</el-tag>
+            <el-tag v-else-if="scope.row.status === 2" type="info">已完成</el-tag>
           </template>
         </el-table-column>
 
