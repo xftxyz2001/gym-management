@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.gymadmin.domain.Card;
+import com.xftxyz.gymadmin.domain.CardType;
 import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.exception.BusinessException;
+import com.xftxyz.gymadmin.helper.DateHelper;
 import com.xftxyz.gymadmin.mapper.CardMapper;
+import com.xftxyz.gymadmin.mapper.CardTypeMapper;
 import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
@@ -32,9 +35,24 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         implements CardService {
 
     private final MemberMapper memberMapper;
+    private final CardTypeMapper cardTypeMapper;
 
     @Override
     public Boolean saveCard(Card card) {
+        Long cardTypeId = card.getCardType();
+        CardType cardType = cardTypeMapper.selectById(cardTypeId);
+        if (ObjectUtils.isEmpty(cardType)) {
+            throw new BusinessException(ResultEnum.CARD_TYPE_NOT_EXIST);
+        }
+        if (ObjectUtils.isEmpty(card.getValidTime())) {
+            card.setValidTime(DateHelper.getAfterDays(new Date(), cardType.getValidTime()));
+        }
+        if (ObjectUtils.isEmpty(card.getTotal())) {
+            card.setTotal(cardType.getCount());
+        }
+        if (ObjectUtils.isEmpty(card.getRemain())) {
+            card.setRemain(cardType.getCount());
+        }
         if (baseMapper.insert(card) <= 0) {
             throw new BusinessException(ResultEnum.CARD_SAVE_FAILED);
         }
