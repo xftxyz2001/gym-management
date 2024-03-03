@@ -17,7 +17,6 @@ import com.xftxyz.gymadmin.mapper.ConsumeMapper;
 import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
-import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.vo.req.ListCardReq;
 import com.xftxyz.gymadmin.vo.req.RegisterReq;
 import com.xftxyz.gymadmin.vo.resp.MemberLoginResp;
@@ -232,6 +231,8 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         memberLoginResp.setCardType(cardType.getName());
         memberLoginResp.setValidTime(card.getValidTime());
         memberLoginResp.setRemain(card.getRemain());
+        memberLoginResp.setStatus(card.getStatus());
+        memberLoginResp.setMemberId(member.getId());
         memberLoginResp.setName(member.getName());
         memberLoginResp.setGender(member.getGender());
         memberLoginResp.setBirthday(member.getBirthday());

@@ -10,7 +10,7 @@
           <!-- <el-form-item label="价格（元）" prop="price">
             <el-input v-model="cardType.price" placeholder="请输入价格"></el-input>
           </el-form-item> -->
-          <el-form-item label="有效期（天）" prop="validTime">
+          <el-form-item label="有效期" prop="validTime">
             <el-input v-model="card.validTime" placeholder="请输入有效期"></el-input>
           </el-form-item>
           <el-form-item label="剩余次数" prop="remain">
@@ -77,13 +77,78 @@
       </div>
     </div>
 
-    <Layer :layer="buyCourseLayer" @confirm="submitBuy"></Layer>
-    <Layer :layer="exchangeLayer" @confirm="submitExchange"></Layer>
+    <Layer :layer="buyCourseLayer" @confirm="submitBuy">
+      <el-form :model="course" label-width="100px">
+        <el-form-item label="课程*" prop="course">
+          <el-autocomplete
+            v-model="queryCourse"
+            value-key="name"
+            :fetch-suggestions="listCoursesByName"
+            @select="handleCourseSelect"
+            placeholder="输入课程名称"
+            style="width: 100%"
+          ></el-autocomplete>
+        </el-form-item>
+      </el-form>
+
+      <el-card v-if="selectedCourse.id">
+        <el-form ref="form" :model="selectedCourse" label-width="100px" disabled>
+          <el-form-item label="课程名称" prop="name">
+            <el-input v-model="selectedCourse.name" placeholder="请输入课程名称"></el-input>
+          </el-form-item>
+          <el-form-item label="教练" prop="coach">
+            <el-input v-model="selectedCourse.coach" placeholder="请输入教练"></el-input>
+          </el-form-item>
+          <el-form-item label="时长（分钟）" prop="duration">
+            <el-input v-model="selectedCourse.duration" placeholder="请输入时长"></el-input>
+          </el-form-item>
+          <el-form-item label="价格（元）" prop="price">
+            <el-input v-model="selectedCourse.price" placeholder="请输入价格"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-card>
+
+      <!-- 操作按钮 -->
+      <div style="margin-top: 20px">
+        <el-button type="primary" @click="submitBuy(0)">现金支付</el-button>
+        <el-button type="primary" @click="submitBuy(1)">刷卡支付</el-button>
+        <el-button type="primary" @click="submitBuy(2)">支付宝支付</el-button>
+        <el-button type="primary" @click="submitBuy(3)">微信支付</el-button>
+      </div>
+    </Layer>
+    <Layer :layer="exchangeLayer" @confirm="submitExchange">
+      <el-form :model="reward" label-width="100px">
+        <el-form-item label="奖品*" prop="reward">
+          <el-autocomplete
+            v-model="queryReward"
+            value-key="name"
+            :fetch-suggestions="listRewardsByName"
+            @select="handleRewardSelect"
+            placeholder="输入奖品名称"
+            style="width: 100%"
+          ></el-autocomplete>
+        </el-form-item>
+      </el-form>
+
+      <el-card v-if="selectedReward.id">
+        <el-form ref="form" :model="selectedReward" label-width="100px" disabled>
+          <el-form-item label="奖品名称" prop="name">
+            <el-input v-model="selectedReward.name" placeholder="请输入奖品名称"></el-input>
+          </el-form-item>
+          <el-form-item label="所需积分" prop="points">
+            <el-input v-model="selectedReward.points" placeholder="请输入所需积分"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </Layer>
   </div>
 </template>
 
 <script setup>
 import { login } from "@/api/member";
+import { listCoursesByName, buyCourse } from "@/api/course";
+import { listRewardsByName, exchangeReward } from "@/api/points";
+
 import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
 import Layer from "@/components/layer/index.vue";
@@ -115,7 +180,7 @@ const memberLayer = reactive({
 const buyCourseLayer = reactive({
   show: false,
   title: "购买课程",
-  showButton: true
+  showButton: false
 });
 
 const exchangeLayer = reactive({
@@ -124,15 +189,40 @@ const exchangeLayer = reactive({
   showButton: true
 });
 
+const course = ref({});
+const queryCourse = ref("");
+const selectedCourse = ref({});
+function handleCourseSelect(item) {
+  selectedCourse.value = item;
+}
+
 // 提交购买课程信息
-function submitBuy() {
-  ElMessage.success("购买课程成功");
-  buyCourseLayer.show = false;
+function submitBuy(payType) {
+  buyCourse({
+    memberId: card.value.memberId,
+    courseId: selectedCourse.value.id,
+    payType
+  }).then(() => {
+    ElMessage.success("课程购买成功");
+    buyCourseLayer.show = false;
+  });
+}
+
+const reward = ref({});
+const queryReward = ref("");
+const selectedReward = ref({});
+function handleRewardSelect(item) {
+  selectedReward.value = item;
 }
 
 // 提交积分兑换信息
 function submitExchange() {
-  ElMessage.success("积分兑换成功");
-  exchangeLayer.show = false;
+  exchangeReward({
+    memberId: card.value.memberId,
+    rewardId: selectedReward.value.id
+  }).then(() => {
+    ElMessage.success("积分兑换成功");
+    exchangeLayer.show = false;
+  });
 }
 </script>

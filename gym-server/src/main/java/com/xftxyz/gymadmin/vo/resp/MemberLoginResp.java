@@ -16,6 +16,12 @@ public class MemberLoginResp {
 
     private Integer remain;
 
+    private Integer status;
+
+
+
+    private Long memberId;
+
     private String name;
 
     private Integer gender;

@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xftxyz.gymadmin.domain.*;
+import com.xftxyz.gymadmin.domain.Coach;
+import com.xftxyz.gymadmin.domain.Consume;
+import com.xftxyz.gymadmin.domain.Course;
+import com.xftxyz.gymadmin.domain.Member;
 import com.xftxyz.gymadmin.exception.BusinessException;
 import com.xftxyz.gymadmin.mapper.CoachMapper;
 import com.xftxyz.gymadmin.mapper.ConsumeMapper;
@@ -14,6 +17,7 @@ import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CourseService;
 import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
+import com.xftxyz.gymadmin.vo.resp.CourseWithCoach;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -126,10 +130,26 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public List<Course> listCoursesByName(String name) {
+    public List<CourseWithCoach> listCoursesByName(String name) {
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(Course::getName, name);
-        return baseMapper.selectList(lambdaQueryWrapper);
+        List<Course> courseList = baseMapper.selectList(lambdaQueryWrapper);
+        return courseList.stream().map(course -> {
+            CourseWithCoach courseWithCoach = new CourseWithCoach();
+            courseWithCoach.setId(course.getId());
+            courseWithCoach.setName(course.getName());
+            courseWithCoach.setCoachId(course.getCoachId());
+            courseWithCoach.setDuration(course.getDuration());
+            courseWithCoach.setPrice(course.getPrice());
+
+            Coach coach = coachMapper.selectById(course.getCoachId());
+            if (!ObjectUtils.isEmpty(coach)) {
+                courseWithCoach.setCoach(coach.getName());
+                courseWithCoach.setContact(coach.getContact());
+                courseWithCoach.setSkill(coach.getSkill());
+            }
+            return courseWithCoach;
+        }).toList();
     }
 
     @Override

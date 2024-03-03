@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Course;
 import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
+import com.xftxyz.gymadmin.vo.resp.CourseWithCoach;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface CourseService extends IService<Course> {
 
     StatisticsVO courseStatistics(StatisticsVO statisticsVO);
 
-    List<Course> listCoursesByName(String name);
+    List<CourseWithCoach> listCoursesByName(String name);
 
     Boolean buyCourse(BuyCourseReq buyCourseReq);
 }
