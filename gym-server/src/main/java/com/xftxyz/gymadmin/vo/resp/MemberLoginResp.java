@@ -19,7 +19,6 @@ public class MemberLoginResp {
     private Integer status;
 
 
-
     private Long memberId;
 
     private String name;

@@ -41,7 +41,7 @@ CREATE TABLE `card`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员卡信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员卡信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of card
@@ -61,7 +61,7 @@ CREATE TABLE `card_type`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '卡类型信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '卡类型信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of card_type
@@ -80,7 +80,7 @@ CREATE TABLE `coach`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '教练信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '教练信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coach
@@ -102,7 +102,7 @@ CREATE TABLE `consume`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消费记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消费记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of consume
@@ -116,13 +116,13 @@ CREATE TABLE `course`  (
   `id` bigint NOT NULL COMMENT '课程ID',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '课程名称',
   `coach_id` bigint NULL DEFAULT NULL COMMENT '教练ID',
-  `duration` time NULL DEFAULT NULL COMMENT '课程时长',
+  `duration` varchar(127) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '课程时长',
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '课程价格',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of course
@@ -141,7 +141,7 @@ CREATE TABLE `exchange`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '积分兑换记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '积分兑换记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of exchange
@@ -166,7 +166,7 @@ CREATE TABLE `member`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of member
@@ -184,7 +184,7 @@ CREATE TABLE `project`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '项目信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '项目信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project
@@ -203,7 +203,7 @@ CREATE TABLE `refund`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '退款记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '退款记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of refund
@@ -221,7 +221,7 @@ CREATE TABLE `reward`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '奖励信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '奖励信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of reward

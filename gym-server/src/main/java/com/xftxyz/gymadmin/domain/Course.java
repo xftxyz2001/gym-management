@@ -37,7 +37,7 @@ public class Course implements Serializable {
      * 课程时长
      */
     @TableField(value = "duration")
-    private Date duration;
+    private String duration;
 
     /**
      * 课程价格
