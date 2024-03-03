@@ -82,6 +82,13 @@ public class RewardServiceImpl extends ServiceImpl<RewardMapper, Reward>
 
         return baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
     }
+
+    @Override
+    public List<Reward> listRewardsByName(String name) {
+        LambdaQueryWrapper<Reward> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(name), Reward::getName, name);
+        return baseMapper.selectList(lambdaQueryWrapper);
+    }
 }
 
 

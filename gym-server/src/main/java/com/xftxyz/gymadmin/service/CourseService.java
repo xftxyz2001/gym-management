@@ -3,6 +3,7 @@ package com.xftxyz.gymadmin.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Course;
+import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 
@@ -28,4 +29,8 @@ public interface CourseService extends IService<Course> {
     IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size);
 
     StatisticsVO courseStatistics(StatisticsVO statisticsVO);
+
+    List<Course> listCoursesByName(String name);
+
+    Boolean buyCourse(BuyCourseReq buyCourseReq);
 }

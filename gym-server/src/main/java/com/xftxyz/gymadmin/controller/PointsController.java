@@ -63,6 +63,11 @@ public class PointsController {
         return rewardService.listRewards(listRewardReq, current, size);
     }
 
+    @GetMapping("/rewards/list")
+    public List<Reward> listRewardsByName(@RequestParam(value = "name") String name) {
+        return rewardService.listRewardsByName(name);
+    }
+
 
     // 兑换奖励
     @PostMapping("/er")

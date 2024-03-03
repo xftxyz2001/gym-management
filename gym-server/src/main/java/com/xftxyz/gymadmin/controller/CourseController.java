@@ -7,6 +7,7 @@ import com.xftxyz.gymadmin.domain.Project;
 import com.xftxyz.gymadmin.service.CoachService;
 import com.xftxyz.gymadmin.service.CourseService;
 import com.xftxyz.gymadmin.service.ProjectService;
+import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCoachReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListProjectReq;
@@ -104,6 +105,18 @@ public class CourseController {
                                      @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
                                      @RequestBody ListCourseReq listCourseReq) {
         return courseService.listCourses(listCourseReq, current, size);
+    }
+
+    // 获取课程列表
+    @GetMapping("/courses/list")
+    public List<Course> listCoursesByName(@RequestParam(value = "name") @NotNull String name) {
+        return courseService.listCoursesByName(name);
+    }
+
+    // 购买课程
+    @PostMapping("/buy")
+    public Boolean buyCourse(@RequestBody @NotNull BuyCourseReq buyCourseReq) {
+        return courseService.buyCourse(buyCourseReq);
     }
 
 

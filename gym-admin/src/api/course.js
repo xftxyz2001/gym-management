@@ -94,6 +94,22 @@ export function listCourses(data, current, size) {
   });
 }
 
+export function listCoursesByName(name) {
+  return request({
+    url: "/api/course/courses/list",
+    method: "get",
+    params: { name }
+  });
+}
+
+export function buyCourse(data) {
+  return request({
+    url: "/api/course/buy",
+    method: "post",
+    data
+  });
+}
+
 export function saveCoach(data) {
   return request({
     url: "/api/course/coach",

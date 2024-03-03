@@ -47,6 +47,14 @@ export function listRewards(data, current, size) {
   });
 }
 
+export function listRewardsByName(name) {
+  return request({
+    url: "/api/points/rewards/list",
+    method: "get",
+    params: { name }
+  });
+}
+
 export function exchangeReward(data) {
   return request({
     url: "/api/points/er",

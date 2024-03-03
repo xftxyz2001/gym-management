@@ -77,8 +77,8 @@
       </div>
     </div>
 
-    <Layer :layer="buyCourseLayer" @confirm="submitBuy">123</Layer>
-    <Layer :layer="exchangeLayer" @confirm="submitExchange">123</Layer>
+    <Layer :layer="buyCourseLayer" @confirm="submitBuy"></Layer>
+    <Layer :layer="exchangeLayer" @confirm="submitExchange"></Layer>
   </div>
 </template>
 

@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xftxyz.gymadmin.domain.Coach;
-import com.xftxyz.gymadmin.domain.Course;
+import com.xftxyz.gymadmin.domain.*;
 import com.xftxyz.gymadmin.exception.BusinessException;
 import com.xftxyz.gymadmin.mapper.CoachMapper;
+import com.xftxyz.gymadmin.mapper.ConsumeMapper;
 import com.xftxyz.gymadmin.mapper.CourseMapper;
+import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CourseService;
+import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         implements CourseService {
 
     private final CoachMapper coachMapper;
+    private final MemberMapper memberMapper;
+    private final ConsumeMapper consumeMapper;
 
     @Override
     public Boolean saveCourse(Course course) {
@@ -119,6 +123,48 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         Long count = baseMapper.selectCount(lambdaQueryWrapper);
         statisticsVO.setCount(BigDecimal.valueOf(count));
         return statisticsVO;
+    }
+
+    @Override
+    public List<Course> listCoursesByName(String name) {
+        LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(Course::getName, name);
+        return baseMapper.selectList(lambdaQueryWrapper);
+    }
+
+    @Override
+    public Boolean buyCourse(BuyCourseReq buyCourseReq) {
+        Long memberId = buyCourseReq.getMemberId();
+        Long courseId = buyCourseReq.getCourseId();
+
+        Member member = memberMapper.selectById(memberId);
+        if (ObjectUtils.isEmpty(member)) {
+            throw new BusinessException(ResultEnum.MEMBER_NOT_EXIST);
+        }
+        Course course = baseMapper.selectById(courseId);
+        if (ObjectUtils.isEmpty(course)) {
+            throw new BusinessException(ResultEnum.COURSE_NOT_EXIST);
+        }
+
+        // 保存消费记录
+        Consume consume = new Consume();
+        consume.setMemberId(memberId);
+        consume.setCtype(Consume.CTYPE_COURSE);
+        consume.setCitem(courseId);
+        consume.setPayType(buyCourseReq.getPayType());
+        consume.setAmount(course.getPrice());
+        consume.setStatus(Consume.STATUS_PAID);
+        if (consumeMapper.insert(consume) <= 0) {
+            throw new BusinessException(ResultEnum.CONSUME_SAVE_FAILED);
+        }
+
+        // 更新会员积分
+        member.setPoints(member.getPoints() + consume.getAmount().intValue());
+        if (memberMapper.updateById(member) <= 0) {
+            throw new BusinessException(ResultEnum.MEMBER_UPDATE_FAILED);
+        }
+        return true;
+
     }
 }
 

@@ -13,6 +13,7 @@ import com.xftxyz.gymadmin.exception.BusinessException;
 import com.xftxyz.gymadmin.helper.DateHelper;
 import com.xftxyz.gymadmin.mapper.CardMapper;
 import com.xftxyz.gymadmin.mapper.CardTypeMapper;
+import com.xftxyz.gymadmin.mapper.ConsumeMapper;
 import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CardService;
@@ -42,7 +43,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
 
     private final MemberMapper memberMapper;
     private final CardTypeMapper cardTypeMapper;
-    private final ConsumeService consumeService;
+    private final ConsumeMapper consumeMapper;
 
     @Override
     public Boolean saveCard(Card card) {
@@ -158,7 +159,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         consume.setPayType(registerReq.getPayType());
         consume.setAmount(cardType.getPrice());
         consume.setStatus(Consume.STATUS_PAID);
-        if (!consumeService.saveConsume(consume)) {
+        if (consumeMapper.insert(consume) <= 0) {
             throw new BusinessException(ResultEnum.CONSUME_SAVE_FAILED);
         }
 

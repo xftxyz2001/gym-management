@@ -25,4 +25,6 @@ public interface RewardService extends IService<Reward> {
     Reward getReward(Long id);
 
     IPage<Reward> listRewards(ListRewardReq listRewardReq, Integer current, Integer size);
+
+    List<Reward> listRewardsByName(String name);
 }
