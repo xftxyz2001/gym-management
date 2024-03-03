@@ -26,7 +26,7 @@ public class CourseWithCoach {
     /**
      * 课程时长
      */
-    private Date duration;
+    private String duration;
 
     /**
      * 课程价格
