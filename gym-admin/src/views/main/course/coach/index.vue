@@ -34,6 +34,7 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
+        <el-table-column prop="id" label="教练ID"></el-table-column>
         <el-table-column prop="name" label="教练姓名"></el-table-column>
         <el-table-column prop="skill" label="教练专长" :show-overflow-tooltip="true"></el-table-column>
 

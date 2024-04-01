@@ -20,6 +20,7 @@ public enum ResultEnum {
     MEMBER_REMOVE_FAILED(202, "会员删除失败"), // 会员删除失败
     MEMBER_UPDATE_FAILED(203, "会员更新失败"), // 会员更新失败
     MEMBER_NOT_EXIST(204, "会员不存在"), // 会员不存在
+    PHONE_EMPTY(205, "手机号为空"), // 手机号为空
 
     CARD_SAVE_FAILED(211, "会员卡保存失败"), // 会员卡保存失败
     CARD_REMOVE_FAILED(212, "会员卡删除失败"), // 会员卡删除失败

@@ -29,6 +29,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
 
     @Override
     public Boolean saveMember(Member member) {
+        if (ObjectUtils.isEmpty(member.getContact())) {
+            throw new BusinessException(ResultEnum.PHONE_EMPTY);
+        }
         LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Member::getContact, member.getContact());
         Member existMember = baseMapper.selectOne(lambdaQueryWrapper);
