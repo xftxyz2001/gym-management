@@ -7,6 +7,7 @@ import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.service.RefundService;
 import com.xftxyz.gymadmin.vo.req.ListConsumeReq;
 import com.xftxyz.gymadmin.vo.req.ListRefundReq;
+import com.xftxyz.gymadmin.vo.req.RefundReq;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,11 @@ public class FinanceController {
         return consumeService.listConsumes(listConsumeReq, current, size);
     }
 
+    // 退款
+    @PostMapping("/refund/b")
+    public Boolean refund(@RequestBody @NotNull RefundReq refundReq) {
+        return refundService.refund(refundReq);
+    }
 
     // 新增退款记录
     @PostMapping("/refund")

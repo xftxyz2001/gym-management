@@ -14,6 +14,7 @@ import com.xftxyz.gymadmin.mapper.RefundMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.RefundService;
 import com.xftxyz.gymadmin.vo.req.ListRefundReq;
+import com.xftxyz.gymadmin.vo.req.RefundReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -95,6 +96,32 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund>
         LambdaQueryWrapper<Refund> consumeLambdaQueryWrapper = new LambdaQueryWrapper<>();
         consumeLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Refund::getMemberId, memberIdList);
         return baseMapper.selectPage(new Page<>(current, size), consumeLambdaQueryWrapper);
+    }
+
+    @Override
+    public Boolean refund(RefundReq refundReq) {
+        Consume consume = consumeMapper.selectById(refundReq.getConsumeId());
+        if (ObjectUtils.isEmpty(consume)) {
+            throw new BusinessException(ResultEnum.CONSUME_NOT_EXIST);
+        }
+        if (Consume.STATUS_PAID != consume.getStatus()) {
+            throw new BusinessException(ResultEnum.CONSUME_STATUS_ERROR);
+        }
+        if (consume.getAmount().compareTo(refundReq.getAmount()) < 0) {
+            throw new BusinessException(ResultEnum.REFUND_AMOUNT_ERROR);
+        }
+        consume.setStatus(Consume.STATUS_REFUND);
+        if (consumeMapper.updateById(consume) <= 0) {
+            throw new BusinessException(ResultEnum.CONSUME_UPDATE_FAILED);
+        }
+        Refund refund = new Refund();
+        refund.setMemberId(consume.getMemberId());
+        refund.setConsumeId(consume.getId());
+        refund.setAmount(refundReq.getAmount());
+        if (baseMapper.insert(refund) <= 0) {
+            throw new BusinessException(ResultEnum.REFUND_SAVE_FAILED);
+        }
+        return true;
     }
 }
 

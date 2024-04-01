@@ -69,6 +69,7 @@ public enum ResultEnum {
     REFUND_REMOVE_FAILED(282, "退款记录删除失败"), // 退款记录删除失败
     REFUND_UPDATE_FAILED(283, "退款记录更新失败"), // 退款记录更新失败
     REFUND_NOT_EXIST(284, "退款记录不存在"), // 退款记录不存在
+    CONSUME_STATUS_ERROR(285, "消费状态错误"), // 消费状态错误
 
     POINTS_NOT_ENOUGH(300, "积分不足"),
     POINTS_UPDATE_FAILED(301, "积分更新失败"),

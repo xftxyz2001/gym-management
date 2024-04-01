@@ -47,6 +47,14 @@ export function listConsumes(data, current, size) {
   });
 }
 
+export function refundConsume(data) {
+  return request({
+    url: "/api/finance/refund/b",
+    method: "post",
+    data
+  });
+}
+
 export function saveRefund(data) {
   return request({
     url: "/api/finance/refund",

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.gymadmin.domain.Refund;
 import com.xftxyz.gymadmin.vo.req.ListRefundReq;
+import com.xftxyz.gymadmin.vo.req.RefundReq;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface RefundService extends IService<Refund> {
     Refund getRefund(Long id);
 
     IPage<Refund> listRefunds(ListRefundReq listRefundReq, Integer current, Integer size);
+
+    Boolean refund(RefundReq refundReq);
 }

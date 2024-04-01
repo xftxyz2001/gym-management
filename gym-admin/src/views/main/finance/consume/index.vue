@@ -82,6 +82,10 @@
                 <el-button type="danger">删除</el-button>
               </template>
             </el-popconfirm>
+            <!-- 退款 -->
+            <el-button type="info" @click="openRefundDialog(scope.row)" :disabled="scope.row.status !== 0">
+              退款
+            </el-button>
           </template>
         </el-table-column>
       </Table>
@@ -123,11 +127,28 @@
         </el-form-item>
       </el-form>
     </Layer>
+
+    <!-- 退款弹窗 -->
+    <Layer :layer="refundLayer" @confirm="submitRefund">
+      <el-form ref="form" :model="formModel4refund" label-width="100px">
+        <el-form-item label="退款金额" prop="amount">
+          <el-input v-model="formModel4refund.amount"></el-input>
+        </el-form-item>
+      </el-form>
+    </Layer>
   </div>
 </template>
 
 <script setup>
-import { saveConsume, removeConsume, removeConsumes, updateConsume, getConsume, listConsumes } from "@/api/finance";
+import {
+  saveConsume,
+  removeConsume,
+  removeConsumes,
+  updateConsume,
+  getConsume,
+  listConsumes,
+  refundConsume
+} from "@/api/finance";
 import Layer from "@/components/layer/index.vue";
 import Table from "@/components/table/index.vue";
 import { Delete, Plus, Search } from "@element-plus/icons";
@@ -243,5 +264,36 @@ function submit() {
       getTableData();
     });
   }
+}
+
+// 退款弹窗
+const formModel4refund = ref({
+  consumeId: "",
+  amount: ""
+});
+
+const refundLayer = reactive({
+  show: false,
+  title: "退款",
+  showButton: true
+});
+
+function openRefundDialog(row) {
+  formModel4refund.value = {
+    consumeId: row.id,
+    amount: row.amount
+  };
+
+  refundLayer.show = true;
+  refundLayer.showButton = true;
+}
+
+// 提交退款
+function submitRefund() {
+  refundConsume(formModel4refund.value).then(() => {
+    ElMessage.success("退款成功");
+    refundLayer.show = false;
+    getTableData();
+  });
 }
 </script>
