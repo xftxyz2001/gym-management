@@ -1,6 +1,7 @@
 package com.xftxyz.gymadmin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xftxyz.gymadmin.domain.CardType;
 import com.xftxyz.gymadmin.domain.Coach;
 import com.xftxyz.gymadmin.domain.Course;
 import com.xftxyz.gymadmin.domain.Project;
@@ -149,6 +150,12 @@ public class CourseController {
     @GetMapping("/coach/{id}")
     public Coach getCoach(@PathVariable("id") @Min(1) Long id) {
         return coachService.getCoach(id);
+    }
+
+    // 获取教练列表
+    @GetMapping("/coach/list")
+    public List<Coach> listCoachsByName(@RequestParam(value = "name") @NotNull String name) {
+        return coachService.listCoachsByName(name);
     }
 
     // 条件查询教练

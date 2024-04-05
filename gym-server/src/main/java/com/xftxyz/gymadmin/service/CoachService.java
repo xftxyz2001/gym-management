@@ -25,4 +25,6 @@ public interface CoachService extends IService<Coach> {
     Coach getCoach(Long id);
 
     IPage<Coach> listCoaches(ListCoachReq listCoachReq, Integer current, Integer size);
+
+    List<Coach> listCoachsByName(String name);
 }

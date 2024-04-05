@@ -3,7 +3,9 @@
     <!-- 头部 -->
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
-        <el-button type="primary" :icon="Plus" @click="openAddDialog">添加</el-button>
+        <el-tooltip content="⚠请前往首页>刷卡">
+          <el-button type="primary" :icon="Plus" @click="openAddDialog">添加</el-button>
+        </el-tooltip>
         <el-popconfirm
           title="确定删除选中的数据吗？"
           @confirm="deleteChoose"

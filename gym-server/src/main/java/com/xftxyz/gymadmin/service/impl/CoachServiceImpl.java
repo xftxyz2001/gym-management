@@ -1,7 +1,9 @@
 package com.xftxyz.gymadmin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.gymadmin.domain.Coach;
@@ -81,6 +83,13 @@ public class CoachServiceImpl extends ServiceImpl<CoachMapper, Coach>
         lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCoachReq.getName()), Coach::getName, listCoachReq.getName());
         lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCoachReq.getSkill()), Coach::getSkill, listCoachReq.getSkill());
         return baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+    }
+
+    @Override
+    public List<Coach> listCoachsByName(String name) {
+        LambdaQueryWrapper<Coach> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(Coach::getName, name);
+        return baseMapper.selectList(lambdaQueryWrapper);
     }
 }
 

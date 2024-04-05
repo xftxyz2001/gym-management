@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <el-button class="full-size-button" type="primary" @click="handleRegisterCard">办卡</el-button>
-    <el-button class="full-size-button" type="primary" @click="handleLoginCard">刷卡</el-button>
+    <el-button id="btnRegister" class="full-size-button" type="primary" @click="handleRegisterCard">办卡</el-button>
+    <el-button id="btnLogin" class="full-size-button" type="primary" @click="handleLoginCard">刷卡</el-button>
   </div>
 </template>
 
@@ -101,8 +101,8 @@ function handleLoginCard() {
 
 .full-size-button {
   flex: 1; /* 让按钮占满容器的空间 */
-  height: 100%; /* 设置按钮高度为容器的高度 */
-  margin: 0 30px; /* 设置按钮之间的间距 */
+  height: 80%; /* 设置按钮高度为容器的高度 */
+  margin: 20px 50px; /* 设置按钮之间的间距 */
   font-size: 50px;
 }
 </style>
