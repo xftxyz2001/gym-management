@@ -14,6 +14,7 @@ public enum ResultEnum {
     LOGIN_ERROR(100, "登录失败，请检查用户名和密码"), // 登录失败
     NOT_LOGIN(101, "未登录"), // 未登录
     PASSWORD_ERROR(102, "密码错误"), // 密码错误
+    LOGIN_EXIST(103, "登录名已存在"), // 登录名已存在
 
     PHONE_EXIST(200, "手机号已存在"), // 手机号已存在
     MEMBER_SAVE_FAILED(201, "会员保存失败"), // 会员保存失败

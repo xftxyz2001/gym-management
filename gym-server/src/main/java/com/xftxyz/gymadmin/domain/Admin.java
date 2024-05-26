@@ -45,6 +45,12 @@ public class Admin implements Serializable {
     private String detail;
 
     /**
+     * 角色(0-管理员, ?-教练id)
+     */
+    @TableField(value = "coach_id")
+    private Long coachId;
+
+    /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)

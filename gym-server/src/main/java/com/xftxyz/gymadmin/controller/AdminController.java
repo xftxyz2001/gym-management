@@ -1,6 +1,7 @@
 package com.xftxyz.gymadmin.controller;
 
 import com.xftxyz.gymadmin.config.GymProperties;
+import com.xftxyz.gymadmin.domain.Admin;
 import com.xftxyz.gymadmin.service.AdminService;
 import com.xftxyz.gymadmin.vo.req.ChangePasswordReq;
 import com.xftxyz.gymadmin.vo.req.LoginReq;
@@ -30,5 +31,17 @@ public class AdminController {
                                   @RequestBody @NotNull ChangePasswordReq changePasswordReq) {
         changePasswordReq.setUserId(userId);
         return adminService.changePassword(changePasswordReq);
+    }
+
+    // 查看教练的登录信息
+    @GetMapping("/coach/{coachId}")
+    public Admin getCoachLoginInfo(@PathVariable Long coachId) {
+        return adminService.getCoachLoginInfo(coachId);
+    }
+
+    // 设置教练的登录信息
+    @PostMapping("/coach")
+    public Boolean setCoachLoginInfo(@RequestBody Admin admin) {
+        return adminService.setCoachLoginInfo(admin);
     }
 }

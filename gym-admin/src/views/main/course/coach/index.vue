@@ -41,9 +41,16 @@
         <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="更新时间" prop="updateTime" :show-overflow-tooltip="true"></el-table-column>
 
+        <el-table-column label="登录">
+          <template v-slot="scope">
+            <el-button type="primary" @click="showLoginInfo(scope.row)">查看</el-button>
+          </template>
+        </el-table-column>
+
         <el-table-column label="操作">
           <template v-slot="scope">
             <el-button type="primary" @click="openEditDialog(scope.row)">修改</el-button>
+
             <el-popconfirm
               title="确定删除吗？"
               @confirm="deleteOne(scope.row)"
@@ -70,15 +77,27 @@
         </el-form-item>
       </el-form>
     </Layer>
+
+    <Layer :layer="loginLayer" @confirm="submitLogin">
+      <el-form ref="loginForm" :model="loginFormModel" label-width="100px">
+        <el-form-item label="用户名" prop="login">
+          <el-input v-model="loginFormModel.login" placeholder="请输入用户名"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginFormModel.password" placeholder="请输入密码"></el-input>
+        </el-form-item>
+      </el-form>
+    </Layer>
   </div>
 </template>
 
 <script setup>
+import { getCoachLoginInfo, setCoachLoginInfo } from "@/api/admin";
 import { saveCoach, removeCoach, removeCoaches, updateCoach, getCoach, listCoaches } from "@/api/course";
 import Layer from "@/components/layer/index.vue";
 import Table from "@/components/table/index.vue";
 import { Delete, Plus, Search } from "@element-plus/icons";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { onBeforeMount, reactive, ref } from "vue";
 
 // 搜索相关
@@ -94,10 +113,24 @@ const layer = reactive({
   showButton: true
 });
 
+// 登录弹窗控制器
+const loginLayer = reactive({
+  show: false,
+  title: "登录信息",
+  showButton: true
+});
+
 // 弹窗表单数据
 const formModel = ref({
   name: "",
   skill: ""
+});
+
+// 登录弹窗表单数据
+const loginFormModel = ref({
+  coachId: "",
+  login: "",
+  password: ""
 });
 
 // 分页参数, 供table使用
@@ -182,5 +215,36 @@ function submit() {
       getTableData();
     });
   }
+}
+
+// 查看登录信息
+function showLoginInfo(row) {
+  getCoachLoginInfo(row.id).then(res => {
+    if (res) {
+      loginFormModel.value = res;
+      loginLayer.show = true;
+    } else {
+      ElMessageBox.confirm("该教练未设置登录信息", "提示", {
+        confirmButtonText: "设置",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        loginFormModel.value = {
+          coachId: row.id,
+          login: "",
+          password: ""
+        };
+        loginLayer.show = true;
+      });
+    }
+  });
+}
+
+// 提交登录信息
+function submitLogin() {
+  setCoachLoginInfo(loginFormModel.value).then(() => {
+    ElMessage.success("设置成功");
+    loginLayer.show = false;
+  });
 }
 </script>

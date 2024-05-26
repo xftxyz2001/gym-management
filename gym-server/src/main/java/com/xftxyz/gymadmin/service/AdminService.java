@@ -16,4 +16,8 @@ public interface AdminService extends IService<Admin> {
     LoginResp login(LoginReq loginReq);
 
     Boolean changePassword(ChangePasswordReq changePasswordReq);
+
+    Admin getCoachLoginInfo(Long coachId);
+
+    Boolean setCoachLoginInfo(Admin admin);
 }

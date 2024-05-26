@@ -16,6 +16,21 @@ export function passwordChange(data) {
   });
 }
 
+export function getCoachLoginInfo(coachId) {
+  return request({
+    url: `/api/admin/coach/${coachId}`,
+    method: "get"
+  });
+}
+
+export function setCoachLoginInfo(data) {
+  return request({
+    url: "/api/admin/coach",
+    method: "post",
+    data
+  });
+}
+
 export function getMenuApi() {
   return request({
     url: "/menu/list",
