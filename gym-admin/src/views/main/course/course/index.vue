@@ -18,6 +18,17 @@
       <div class="layout-container-form-search">
         <el-input v-model="query.name" placeholder="课程名称"></el-input>
         <el-input v-model="query.coachName" placeholder="教练名称"></el-input>
+        <el-select v-model="query.timeFrame" placeholder="上课时间段" style="width: 100%">
+          <el-option label="全部时间" value=""></el-option>
+          <el-option label="7:00-9:00" value="7:00-9:00"></el-option>
+          <el-option label="9:00-11:00" value="9:00-11:00"></el-option>
+
+          <el-option label="13:00-15:00" value="13:00-15:00"></el-option>
+          <el-option label="15:00-17:00" value="15:00-17:00"></el-option>
+          <el-option label="17:00-19:00" value="17:00-19:00"></el-option>
+
+          <el-option label="19:00-21:00" value="19:00-21:00"></el-option>
+        </el-select>
         <el-button type="primary" :icon="Search" class="search-btn" @click="getTableData">搜索</el-button>
       </div>
     </div>
@@ -118,7 +129,8 @@ import { onBeforeMount, reactive, ref } from "vue";
 // 搜索相关
 const query = reactive({
   name: "",
-  coachName: ""
+  coachName: "",
+  timeFrame: ""
 });
 
 // 弹窗控制器

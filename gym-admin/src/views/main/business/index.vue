@@ -102,6 +102,9 @@
           <el-form-item label="时长（分钟）" prop="duration">
             <el-input v-model="selectedCourse.duration" placeholder="请输入时长"></el-input>
           </el-form-item>
+          <el-form-item label="上课时间段" prop="timeFrame">
+            <el-input v-model="selectedCourse.timeFrame" placeholder="请输入上课时间段"></el-input>
+          </el-form-item>
           <el-form-item label="价格（元）" prop="price">
             <el-input v-model="selectedCourse.price" placeholder="请输入价格"></el-input>
           </el-form-item>

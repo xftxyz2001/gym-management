@@ -15,6 +15,7 @@ public enum ResultEnum {
     NOT_LOGIN(101, "未登录"), // 未登录
     PASSWORD_ERROR(102, "密码错误"), // 密码错误
     LOGIN_EXIST(103, "登录名已存在"), // 登录名已存在
+    LOGIN_EMPTY(104, "登录名不能为空"), // 登录名为空
 
     PHONE_EXIST(200, "手机号已存在"), // 手机号已存在
     MEMBER_SAVE_FAILED(201, "会员保存失败"), // 会员保存失败
@@ -44,6 +45,7 @@ public enum ResultEnum {
     COURSE_REMOVE_FAILED(232, "课程删除失败"), // 课程删除失败
     COURSE_UPDATE_FAILED(233, "课程更新失败"), // 课程更新失败
     COURSE_NOT_EXIST(234, "课程不存在"), // 课程不存在
+    COACH_BUSY(235, "教练在当前时间已有课程"), // 教练在当前时间已有课程
 
     COACH_EXIST(240, "教练已存在"), // 教练已存在
     COACH_SAVE_FAILED(241, "教练保存失败"), // 教练保存失败

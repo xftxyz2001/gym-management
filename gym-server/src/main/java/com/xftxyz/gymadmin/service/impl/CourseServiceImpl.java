@@ -42,12 +42,22 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
 
     @Override
     public Boolean saveCourse(Course course) {
+        // 检查课程是否已存在
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Course::getName, course.getName());
         Course existCourse = baseMapper.selectOne(lambdaQueryWrapper);
         if (!ObjectUtils.isEmpty(existCourse)) {
             throw new BusinessException(ResultEnum.COURSE_EXIST);
         }
+        // 检查教练在当前时间是否有课程
+        lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Course::getCoachId, course.getCoachId());
+        lambdaQueryWrapper.eq(Course::getTimeFrame, course.getTimeFrame());
+        existCourse = baseMapper.selectOne(lambdaQueryWrapper);
+        if (!ObjectUtils.isEmpty(existCourse)) {
+            throw new BusinessException(ResultEnum.COACH_BUSY);
+        }
+
         if (baseMapper.insert(course) <= 0) {
             throw new BusinessException(ResultEnum.COURSE_SAVE_FAILED);
         }
@@ -76,6 +86,14 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         if (ObjectUtils.isEmpty(existCourse)) {
             throw new BusinessException(ResultEnum.COURSE_NOT_EXIST);
         }
+        // 检查教练在当前时间是否有课程
+        LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Course::getCoachId, course.getCoachId());
+        lambdaQueryWrapper.eq(Course::getTimeFrame, course.getTimeFrame());
+        Course existCourse2 = baseMapper.selectOne(lambdaQueryWrapper);
+        if (!ObjectUtils.isEmpty(existCourse2) && !existCourse2.getId().equals(course.getId())) {
+            throw new BusinessException(ResultEnum.COACH_BUSY);
+        }
         if (baseMapper.updateById(course) <= 0) {
             throw new BusinessException(ResultEnum.COURSE_UPDATE_FAILED);
         }
@@ -95,6 +113,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     public IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size) {
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getName()), Course::getName, listCourseReq.getName());
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getTimeFrame()), Course::getTimeFrame, listCourseReq.getTimeFrame());
 
         if (!ObjectUtils.isEmpty(listCourseReq.getCoachName())) {
             LambdaQueryWrapper<Coach> coachLambdaQueryWrapper = new LambdaQueryWrapper<>();

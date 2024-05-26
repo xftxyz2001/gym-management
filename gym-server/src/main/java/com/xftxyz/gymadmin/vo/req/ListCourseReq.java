@@ -14,4 +14,9 @@ public class ListCourseReq {
      * 教练名称
      */
     private String coachName;
+
+    /**
+     * 上课时间段
+     */
+    private String timeFrame;
 }

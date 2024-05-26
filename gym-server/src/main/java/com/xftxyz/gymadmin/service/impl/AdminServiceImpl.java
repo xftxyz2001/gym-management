@@ -16,6 +16,7 @@ import com.xftxyz.gymadmin.vo.resp.LoginResp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * @author 25810
@@ -69,6 +70,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         Coach coach = coachMapper.selectOne(coachLambdaQueryWrapper);
         if (ObjectUtils.isEmpty(coach)) {
             throw new BusinessException(ResultEnum.COACH_NOT_EXIST);
+        }
+        // 检查登录名是否为空
+        if (!StringUtils.hasLength(admin.getLogin())) {
+            throw new BusinessException(ResultEnum.LOGIN_EMPTY);
         }
         // 检查登录名是否重复
         LambdaQueryWrapper<Admin> loginLambdaQueryWrapper = new LambdaQueryWrapper<>();
