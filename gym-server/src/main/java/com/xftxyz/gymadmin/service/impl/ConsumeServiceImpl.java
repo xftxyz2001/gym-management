@@ -12,7 +12,6 @@ import com.xftxyz.gymadmin.mapper.MemberMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.ConsumeService;
 import com.xftxyz.gymadmin.vo.req.ListConsumeReq;
-import com.xftxyz.gymadmin.vo.req.RefundReq;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

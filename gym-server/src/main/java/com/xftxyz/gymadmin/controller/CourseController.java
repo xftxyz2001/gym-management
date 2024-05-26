@@ -1,7 +1,6 @@
 package com.xftxyz.gymadmin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xftxyz.gymadmin.domain.CardType;
 import com.xftxyz.gymadmin.domain.Coach;
 import com.xftxyz.gymadmin.domain.Course;
 import com.xftxyz.gymadmin.domain.Project;
