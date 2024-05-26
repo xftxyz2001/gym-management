@@ -12,7 +12,7 @@
       <div class="box-inner">
         <h1>欢迎登录</h1>
         <el-form class="form">
-          <el-input size="large" v-model="form.name" readonly placeholder="用户名" type="text" maxlength="50">
+          <el-input size="large" v-model="form.name" placeholder="用户名" type="text" maxlength="50">
             <template #prepend>
               <i class="sfont system-xingmingyonghumingnicheng"></i>
             </template>
