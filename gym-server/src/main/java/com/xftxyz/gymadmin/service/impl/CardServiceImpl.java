@@ -86,7 +86,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         if (ObjectUtils.isEmpty(card)) {
             throw new BusinessException(ResultEnum.CARD_NOT_EXIST);
         }
-        return card;
+        return this.cardSetMemberAndCardType(card);
     }
 
     @Override
@@ -99,7 +99,9 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
 
         LambdaQueryWrapper<Card> cardLambdaQueryWrapper = new LambdaQueryWrapper<>();
         cardLambdaQueryWrapper.in(!ObjectUtils.isEmpty(memberIdList), Card::getMemberId, memberIdList);
-        return baseMapper.selectPage(new Page<>(current, size), cardLambdaQueryWrapper);
+        Page<Card> cardPage = baseMapper.selectPage(new Page<>(current, size), cardLambdaQueryWrapper);
+        cardPage.getRecords().forEach(this::cardSetMemberAndCardType);
+        return cardPage;
     }
 
     @Override
@@ -170,6 +172,22 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         return true;
     }
 
+    private Card cardSetMemberAndCardType(Card card) {
+        if (!ObjectUtils.isEmpty(card.getMemberId())) {
+            Member member = memberMapper.selectById(card.getMemberId());
+            if (!ObjectUtils.isEmpty(member)) {
+                card.setMember(member);
+            }
+        }
+        if (!ObjectUtils.isEmpty(card.getCardType())) {
+            CardType cardType = cardTypeMapper.selectById(card.getCardType());
+            if (!ObjectUtils.isEmpty(cardType)) {
+                card.setCardTypeEntity(cardType);
+            }
+        }
+        return card;
+    }
+
     @Override
     public Card getCardByContact(String contact) {
         LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -201,7 +219,8 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
                 return card;
             }
         }
-        return cards.getLast();
+        Card last = cards.getLast();
+        return this.cardSetMemberAndCardType(last);
     }
 
     @Override
@@ -244,6 +263,15 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         memberLoginResp.setPoints(member.getPoints());
 
         return memberLoginResp;
+    }
+
+    @Override
+    public Card getOneCard(String symbol) {
+        try {
+            return this.getCard(Long.valueOf(symbol));
+        } catch (NumberFormatException | BusinessException e) {
+            return this.getCardByContact(symbol);
+        }
     }
 }
 

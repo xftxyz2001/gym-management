@@ -72,4 +72,10 @@ public class Card implements Serializable {
      */
     @TableField(value = "is_deleted")
     private Integer isDeleted;
+
+    @TableField(exist = false)
+    private Member member;
+
+    @TableField(exist = false)
+    private CardType cardTypeEntity;
 }

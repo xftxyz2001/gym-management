@@ -125,6 +125,12 @@ public class MemberController {
         return cardService.getCardByContact(contact);
     }
 
+    // 根据卡号or联系方式获取一张会员卡
+    @GetMapping("/card/getone")
+    public Card getOneCard(@RequestParam(value = "symbol") @NotNull String symbol) {
+        return cardService.getOneCard(symbol);
+    }
+
 
     // 新增会员卡类型
     @PostMapping("/cardType")

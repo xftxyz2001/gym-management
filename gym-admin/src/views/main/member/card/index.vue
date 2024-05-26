@@ -36,8 +36,12 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="memberId" label="所属会员ID"></el-table-column>
-        <el-table-column prop="cardType" label="卡类型ID"></el-table-column>
+        <el-table-column prop="memberId" label="所属会员">
+          <template v-slot="scope">{{ scope.row.member.name }}({{ scope.row.member.contact }})</template>
+        </el-table-column>
+        <el-table-column prop="cardType" label="卡类型">
+          <template v-slot="scope">{{ scope.row.cardTypeEntity.name }}</template>
+        </el-table-column>
 
         <el-table-column prop="validTime" label="有效期（至）"></el-table-column>
         <el-table-column prop="total" label="总次数/金额"></el-table-column>
@@ -74,11 +78,20 @@
     <!-- 弹窗 -->
     <Layer :layer="layer" @confirm="submit">
       <el-form ref="form" :model="formModel" label-width="100px">
-        <el-form-item label="所属会员ID" prop="memberId">
-          <el-input v-model="formModel.memberId" placeholder="请输入所属会员ID"></el-input>
+        <el-form-item label="所属会员" prop="memberId">
+          <el-input
+            :value="`${formModel.member.name}(${formModel.member.contact})`"
+            placeholder="请输入所属会员"
+            readonly
+          ></el-input>
         </el-form-item>
-        <el-form-item label="卡类型ID" prop="cardType">
-          <el-input v-model="formModel.cardType" placeholder="请输入卡类型ID"></el-input>
+        <el-form-item label="卡类型" prop="cardType">
+          <el-autocomplete
+            v-model="formModel.cardTypeEntity.name"
+            placeholder="请输入卡类型"
+            :fetch-suggestions="querySearch"
+            @select="handleSelect"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="有效期（至）" prop="validTime">
           <el-date-picker
@@ -107,7 +120,7 @@
 </template>
 
 <script setup>
-import { saveCard, removeCard, removeCards, updateCard, getCard, listCards } from "@/api/member";
+import { saveCard, removeCard, removeCards, updateCard, getCard, listCards, listCardTypesByName } from "@/api/member";
 import Layer from "@/components/layer/index.vue";
 import Table from "@/components/table/index.vue";
 import { Delete, Plus, Search } from "@element-plus/icons";
@@ -130,7 +143,9 @@ const layer = reactive({
 // 弹窗表单数据
 const formModel = ref({
   memberId: "",
+  member: {},
   cardType: "",
+  cardTypeEntity: {},
   validTime: "",
   total: "",
   remain: "",
@@ -183,11 +198,23 @@ function deleteOne(row) {
   });
 }
 
+function querySearch(queryStr, cb) {
+  listCardTypesByName(queryStr).then(res => {
+    cb(res.map(item => ({ value: item.name, id: item.id })));
+  });
+}
+
+function handleSelect(item) {
+  formModel.value.cardType = item.id;
+}
+
 // 新增/编辑弹窗
 function openAddDialog() {
   formModel.value = {
     memberId: "",
+    member: {},
     cardType: "",
+    cardTypeEntity: {},
     validTime: "",
     total: "",
     remain: "",

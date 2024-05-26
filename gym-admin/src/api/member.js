@@ -177,3 +177,11 @@ export function login(id) {
     method: "post"
   });
 }
+
+export function getOneCard(symbol) {
+  return request({
+    url: "/api/member/card/getone",
+    method: "get",
+    params: { symbol }
+  });
+}

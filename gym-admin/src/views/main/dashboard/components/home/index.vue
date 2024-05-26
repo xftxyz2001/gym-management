@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { getMemberByContact, getCard, getCardByContact } from "@/api/member";
+import { getMemberByContact, getOneCard } from "@/api/member";
 import { ElButton, ElMessage, ElMessageBox } from "element-plus";
 
 import { useRouter } from "vue-router";
@@ -75,18 +75,25 @@ function handleLoginCard() {
     confirmButtonText: "确认",
     cancelButtonText: "取消"
   }).then(({ value }) => {
-    getCard(value)
+    // getCard(value)
+    //   .then(res => {
+    //     goBusinessIndex(res.id);
+    //   })
+    //   .catch(() => {
+    //     getCardByContact(value)
+    //       .then(res => {
+    //         goBusinessIndex(res.id);
+    //       })
+    //       .catch(() => {
+    //         ElMessage.error("卡号/手机号不存在");
+    //       });
+    //   });
+    getOneCard(value)
       .then(res => {
         goBusinessIndex(res.id);
       })
       .catch(() => {
-        getCardByContact(value)
-          .then(res => {
-            goBusinessIndex(res.id);
-          })
-          .catch(() => {
-            ElMessage.error("卡号/手机号不存在");
-          });
+        ElMessage.error("卡号/手机号不存在");
       });
   });
 }

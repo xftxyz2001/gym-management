@@ -38,4 +38,6 @@ public interface CardService extends IService<Card> {
     void checkCardStatus();
 
     MemberLoginResp login(Long id);
+
+    Card getOneCard(String symbol);
 }
