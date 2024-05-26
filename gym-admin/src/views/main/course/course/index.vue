@@ -37,6 +37,7 @@
         <el-table-column prop="name" label="课程名称"></el-table-column>
         <el-table-column prop="coachId" label="教练ID"></el-table-column>
         <el-table-column prop="duration" label="课程时长"></el-table-column>
+        <el-table-column prop="timeFrame" label="上课时间段"></el-table-column>
         <el-table-column prop="price" label="课程价格"></el-table-column>
 
         <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true"></el-table-column>
@@ -72,6 +73,9 @@
         <el-form-item label="课程时长" prop="duration">
           <el-input v-model="formModel.duration" placeholder="请输入课程时长"></el-input>
         </el-form-item>
+        <el-form-item label="上课时间段" prop="timeFrame">
+          <el-input v-model="formModel.timeFrame" placeholder="请输入上课时间段"></el-input>
+        </el-form-item>
         <el-form-item label="课程价格" prop="price">
           <el-input v-model="formModel.price" placeholder="请输入课程价格"></el-input>
         </el-form-item>
@@ -106,6 +110,7 @@ const formModel = ref({
   name: "",
   coachId: "",
   duration: "",
+  timeFrame: "",
   price: ""
 });
 
@@ -161,6 +166,7 @@ function openAddDialog() {
     name: "",
     coachId: "",
     duration: "",
+    timeFrame: "",
     price: ""
   };
 

@@ -40,6 +40,13 @@ public class Course implements Serializable {
     private String duration;
 
     /**
+     * 上课时间段
+     */
+    @TableField(value = "time_frame")
+    private String timeFrame;
+
+
+    /**
      * 课程价格
      */
     @TableField(value = "price")
