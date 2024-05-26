@@ -1,5 +1,18 @@
-CREATE DATABASE IF NOT EXISTS gym;
-USE gym;
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost_3306
+ Source Server Type    : MySQL
+ Source Server Version : 80200 (8.2.0)
+ Source Host           : localhost:3306
+ Source Schema         : gym
+
+ Target Server Type    : MySQL
+ Target Server Version : 80200 (8.2.0)
+ File Encoding         : 65001
+
+ Date: 27/05/2024 03:39:48
+*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -14,6 +27,7 @@ CREATE TABLE `admin`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '登录密码',
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '姓名',
   `detail` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+  `coach_id` bigint NULL DEFAULT NULL COMMENT '角色(0-管理员, ?-教练id)',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除(0-未删除, 1-已删除)',
@@ -23,7 +37,9 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'admin', 'admin', '管理员', NULL, '2024-02-14 07:05:24', '2024-02-14 07:05:24', 0);
+INSERT INTO `admin` VALUES (1, 'admin', 'admin', '管理员', NULL, 0, '2024-02-14 07:05:24', '2024-05-27 01:09:31', 0);
+INSERT INTO `admin` VALUES (1794788840567263233, 'zhang', 'zhang', '张教练', NULL, 1, '2024-05-27 01:53:00', '2024-05-27 01:53:00', 0);
+INSERT INTO `admin` VALUES (1794788870443290625, 'li', 'li', '李教练', NULL, 2, '2024-05-27 01:53:07', '2024-05-27 01:53:07', 0);
 
 -- ----------------------------
 -- Table structure for card
@@ -46,6 +62,7 @@ CREATE TABLE `card`  (
 -- ----------------------------
 -- Records of card
 -- ----------------------------
+INSERT INTO `card` VALUES (1794801789684002817, 1794801729957113857, 2, '2024-06-26 00:00:00', -1, -1, 0, '2024-05-27 02:44:27', '2024-05-27 03:14:43', 0);
 
 -- ----------------------------
 -- Table structure for card_type
@@ -117,6 +134,8 @@ CREATE TABLE `consume`  (
 -- ----------------------------
 -- Records of consume
 -- ----------------------------
+INSERT INTO `consume` VALUES (1794801789751111682, 1794801729957113857, 0, 1, 0, 300.00, 0, '2024-05-27 02:44:27', '2024-05-27 02:44:27', 0);
+INSERT INTO `consume` VALUES (1794802164692529153, 1794801729957113857, 1, 1, 0, 100.00, 0, '2024-05-27 02:45:57', '2024-05-27 02:45:57', 0);
 
 -- ----------------------------
 -- Table structure for course
@@ -127,6 +146,7 @@ CREATE TABLE `course`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '课程名称',
   `coach_id` bigint NULL DEFAULT NULL COMMENT '教练ID',
   `duration` varchar(127) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '课程时长',
+  `time_frame` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '上课时间段',
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '课程价格',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -137,16 +157,16 @@ CREATE TABLE `course`  (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES (1, '初级瑜伽', 1, '1小时', 100.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (2, '中级瑜伽', 1, '1.5小时', 150.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (3, '高级瑜伽', 1, '2小时', 200.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (4, '初级力量训练', 2, '1小时', 100.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (5, '中级力量训练', 2, '1.5小时', 150.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (6, '初级有氧运动', 3, '1小时', 100.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (7, '中级有氧运动', 3, '1.5小时', 150.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (8, '高级有氧运动', 3, '2小时', 200.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (9, '初级普拉提', 4, '1小时', 100.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
-INSERT INTO `course` VALUES (10, '初级跑步', 5, '1小时', 100.00, '2024-03-03 23:13:50', '2024-03-03 23:13:50', 0);
+INSERT INTO `course` VALUES (1, '初级瑜伽', 1, '1小时', '7:00-9:00', 100.00, '2024-03-03 23:13:50', '2024-05-27 02:42:09', 0);
+INSERT INTO `course` VALUES (2, '中级瑜伽', 1, '1.5小时', '9:00-11:00', 150.00, '2024-03-03 23:13:50', '2024-05-27 02:10:29', 0);
+INSERT INTO `course` VALUES (3, '高级瑜伽', 1, '2小时', '17:00-19:00', 200.00, '2024-03-03 23:13:50', '2024-05-27 02:10:52', 0);
+INSERT INTO `course` VALUES (4, '初级力量训练', 2, '1小时', '7:00-9:00', 100.00, '2024-03-03 23:13:50', '2024-05-27 02:08:05', 0);
+INSERT INTO `course` VALUES (5, '中级力量训练', 2, '1.5小时', '9:00-11:00', 150.00, '2024-03-03 23:13:50', '2024-05-27 02:10:38', 0);
+INSERT INTO `course` VALUES (6, '初级有氧运动', 3, '1小时', '7:00-9:00', 100.00, '2024-03-03 23:13:50', '2024-05-27 02:08:05', 0);
+INSERT INTO `course` VALUES (7, '中级有氧运动', 3, '1.5小时', '9:00-11:00', 150.00, '2024-03-03 23:13:50', '2024-05-27 02:11:07', 0);
+INSERT INTO `course` VALUES (8, '高级有氧运动', 3, '2小时', '17:00-19:00', 200.00, '2024-03-03 23:13:50', '2024-05-27 02:11:05', 0);
+INSERT INTO `course` VALUES (9, '初级普拉提', 4, '1小时', '7:00-9:00', 100.00, '2024-03-03 23:13:50', '2024-05-27 02:08:05', 0);
+INSERT INTO `course` VALUES (10, '初级跑步', 5, '1小时', '7:00-9:00', 100.00, '2024-03-03 23:13:50', '2024-05-27 02:08:05', 0);
 
 -- ----------------------------
 -- Table structure for exchange
@@ -191,6 +211,7 @@ CREATE TABLE `member`  (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
+INSERT INTO `member` VALUES (1794801729957113857, '陈哥', 1, '2001-05-01', 180.00, 135.00, 'normal', '12345678911', '长安', 400, '2024-05-27 02:44:13', '2024-05-27 02:45:57', 0);
 
 -- ----------------------------
 -- Table structure for project
