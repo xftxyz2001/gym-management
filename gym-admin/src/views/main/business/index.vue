@@ -97,7 +97,7 @@
             <el-input v-model="selectedCourse.name" placeholder="请输入课程名称"></el-input>
           </el-form-item>
           <el-form-item label="教练" prop="coach">
-            <el-input v-model="selectedCourse.coach" placeholder="请输入教练"></el-input>
+            <el-input v-model="selectedCourse.coach.name" placeholder="请输入教练"></el-input>
           </el-form-item>
           <el-form-item label="时长（分钟）" prop="duration">
             <el-input v-model="selectedCourse.duration" placeholder="请输入时长"></el-input>

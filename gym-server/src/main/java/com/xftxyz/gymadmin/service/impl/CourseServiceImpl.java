@@ -17,7 +17,6 @@ import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CourseService;
 import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
-import com.xftxyz.gymadmin.vo.resp.CourseWithCoach;
 import com.xftxyz.gymadmin.vo.resp.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,7 +88,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         if (ObjectUtils.isEmpty(course)) {
             throw new BusinessException(ResultEnum.COURSE_NOT_EXIST);
         }
-        return course;
+        return this.courseSetCoach(course);
     }
 
     @Override
@@ -104,7 +103,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             List<Long> coachIdList = coaches.stream().map(Coach::getId).toList();
             lambdaQueryWrapper.in(!ObjectUtils.isEmpty(coachIdList), Course::getCoachId, coachIdList);
         }
-        return baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+        Page<Course> coursePage = baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+        coursePage.getRecords().forEach(this::courseSetCoach);
+        return coursePage;
     }
 
     @Override
@@ -130,26 +131,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public List<CourseWithCoach> listCoursesByName(String name) {
+    public List<Course> listCoursesByName(String name) {
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(Course::getName, name);
         List<Course> courseList = baseMapper.selectList(lambdaQueryWrapper);
-        return courseList.stream().map(course -> {
-            CourseWithCoach courseWithCoach = new CourseWithCoach();
-            courseWithCoach.setId(course.getId());
-            courseWithCoach.setName(course.getName());
-            courseWithCoach.setCoachId(course.getCoachId());
-            courseWithCoach.setDuration(course.getDuration());
-            courseWithCoach.setPrice(course.getPrice());
+        return courseList.stream().map(this::courseSetCoach).toList();
+    }
 
+    private Course courseSetCoach(Course course) {
+        if (!ObjectUtils.isEmpty(course.getCoachId())) {
             Coach coach = coachMapper.selectById(course.getCoachId());
             if (!ObjectUtils.isEmpty(coach)) {
-                courseWithCoach.setCoach(coach.getName());
-                courseWithCoach.setContact(coach.getContact());
-                courseWithCoach.setSkill(coach.getSkill());
+                course.setCoach(coach);
             }
-            return courseWithCoach;
-        }).toList();
+        }
+        return course;
     }
 
     @Override

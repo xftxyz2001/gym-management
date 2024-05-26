@@ -62,4 +62,7 @@ public class Course implements Serializable {
      */
     @TableField(value = "is_deleted")
     private Integer isDeleted;
+
+    @TableField(exist = false)
+    private Coach coach;
 }

@@ -156,3 +156,11 @@ export function listCoaches(data, current, size) {
     data
   });
 }
+
+export function listCoachesByName(name) {
+  return request({
+    url: "/api/course/coach/list",
+    method: "get",
+    params: { name }
+  });
+}

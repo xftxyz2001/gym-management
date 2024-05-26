@@ -11,7 +11,6 @@ import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListCoachReq;
 import com.xftxyz.gymadmin.vo.req.ListCourseReq;
 import com.xftxyz.gymadmin.vo.req.ListProjectReq;
-import com.xftxyz.gymadmin.vo.resp.CourseWithCoach;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -110,7 +109,7 @@ public class CourseController {
 
     // 获取课程列表
     @GetMapping("/courses/list")
-    public List<CourseWithCoach> listCoursesByName(@RequestParam(value = "name") @NotNull String name) {
+    public List<Course> listCoursesByName(@RequestParam(value = "name") @NotNull String name) {
         return courseService.listCoursesByName(name);
     }
 

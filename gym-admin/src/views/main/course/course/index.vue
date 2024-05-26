@@ -35,7 +35,8 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="name" label="课程名称"></el-table-column>
-        <el-table-column prop="coachId" label="教练ID"></el-table-column>
+        <el-table-column prop="coach.name" label="教练"></el-table-column>
+
         <el-table-column prop="duration" label="课程时长"></el-table-column>
         <el-table-column prop="timeFrame" label="上课时间段"></el-table-column>
         <el-table-column prop="price" label="课程价格"></el-table-column>
@@ -67,14 +68,28 @@
         <el-form-item label="课程名称" prop="name">
           <el-input v-model="formModel.name" placeholder="请输入课程名称"></el-input>
         </el-form-item>
-        <el-form-item label="教练ID" prop="coachId">
-          <el-input v-model="formModel.coachId" placeholder="请输入教练ID"></el-input>
+        <el-form-item label="教练" prop="coach.name">
+          <el-autocomplete
+            v-model="formModel.coach.name"
+            placeholder="请输入教练"
+            :fetch-suggestions="querySearch"
+            @select="handleSelect"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="课程时长" prop="duration">
           <el-input v-model="formModel.duration" placeholder="请输入课程时长"></el-input>
         </el-form-item>
         <el-form-item label="上课时间段" prop="timeFrame">
-          <el-input v-model="formModel.timeFrame" placeholder="请输入上课时间段"></el-input>
+          <el-select v-model="formModel.timeFrame" placeholder="请选择" style="width: 100%">
+            <el-option label="7:00-9:00" value="7:00-9:00"></el-option>
+            <el-option label="9:00-11:00" value="9:00-11:00"></el-option>
+
+            <el-option label="13:00-15:00" value="13:00-15:00"></el-option>
+            <el-option label="15:00-17:00" value="15:00-17:00"></el-option>
+            <el-option label="17:00-19:00" value="17:00-19:00"></el-option>
+
+            <el-option label="19:00-21:00" value="19:00-21:00"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="课程价格" prop="price">
           <el-input v-model="formModel.price" placeholder="请输入课程价格"></el-input>
@@ -85,7 +100,15 @@
 </template>
 
 <script setup>
-import { saveCourse, removeCourse, removeCourses, updateCourse, getCourse, listCourses } from "@/api/course";
+import {
+  saveCourse,
+  removeCourse,
+  removeCourses,
+  updateCourse,
+  getCourse,
+  listCourses,
+  listCoachesByName
+} from "@/api/course";
 import Layer from "@/components/layer/index.vue";
 import Table from "@/components/table/index.vue";
 import { Delete, Plus, Search } from "@element-plus/icons";
@@ -109,6 +132,7 @@ const layer = reactive({
 const formModel = ref({
   name: "",
   coachId: "",
+  coach: {},
   duration: "",
   timeFrame: "",
   price: ""
@@ -160,11 +184,23 @@ function deleteOne(row) {
   });
 }
 
+// 搜索教练
+function querySearch(queryStr, cb) {
+  listCoachesByName(queryStr).then(res => {
+    cb(res.map(item => ({ value: item.name, id: item.id })));
+  });
+}
+// 选择教练
+function handleSelect(item) {
+  formModel.value.coachId = item.id;
+}
+
 // 新增/编辑弹窗
 function openAddDialog() {
   formModel.value = {
     name: "",
     coachId: "",
+    coach: {},
     duration: "",
     timeFrame: "",
     price: ""
