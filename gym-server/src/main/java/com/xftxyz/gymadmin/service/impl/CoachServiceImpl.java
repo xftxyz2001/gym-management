@@ -1,15 +1,19 @@
 package com.xftxyz.gymadmin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xftxyz.gymadmin.domain.Admin;
 import com.xftxyz.gymadmin.domain.Coach;
 import com.xftxyz.gymadmin.exception.BusinessException;
+import com.xftxyz.gymadmin.mapper.AdminMapper;
 import com.xftxyz.gymadmin.mapper.CoachMapper;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CoachService;
 import com.xftxyz.gymadmin.vo.req.ListCoachReq;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -21,8 +25,11 @@ import java.util.List;
  * @createDate 2024-02-14 07:08:06
  */
 @Service
+@RequiredArgsConstructor
 public class CoachServiceImpl extends ServiceImpl<CoachMapper, Coach>
         implements CoachService {
+
+    private final AdminMapper adminMapper;
 
     @Override
     public Boolean saveCoach(Coach coach) {
@@ -63,6 +70,10 @@ public class CoachServiceImpl extends ServiceImpl<CoachMapper, Coach>
         if (baseMapper.updateById(coach) <= 0) {
             throw new BusinessException(ResultEnum.COACH_UPDATE_FAILED);
         }
+        LambdaUpdateWrapper<Admin> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(Admin::getCoachId, coach.getId());
+        lambdaUpdateWrapper.set(Admin::getName, coach.getName());
+        adminMapper.update(lambdaUpdateWrapper);
         return true;
     }
 
