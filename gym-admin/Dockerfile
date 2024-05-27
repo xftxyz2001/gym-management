@@ -1,7 +1,11 @@
 # Dockerfile for gym-admin
-FROM nginx:1.24.0
+FROM nginx:1.25.5
 
 WORKDIR /app
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 
 COPY dist .
 
