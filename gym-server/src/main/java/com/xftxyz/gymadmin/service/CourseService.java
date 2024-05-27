@@ -26,11 +26,13 @@ public interface CourseService extends IService<Course> {
 
     Course getCourse(Long id);
 
-    IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size);
+    IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size, Long userId);
 
     StatisticsVO courseStatistics(StatisticsVO statisticsVO);
 
     List<Course> listCoursesByName(String name);
 
     Boolean buyCourse(BuyCourseReq buyCourseReq);
+
+    IPage<Course> listCoursesByCoach(ListCourseReq listCourseReq, Integer current, Integer size, Long coachId);
 }

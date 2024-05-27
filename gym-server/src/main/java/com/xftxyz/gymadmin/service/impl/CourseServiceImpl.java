@@ -4,15 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xftxyz.gymadmin.domain.Coach;
-import com.xftxyz.gymadmin.domain.Consume;
-import com.xftxyz.gymadmin.domain.Course;
-import com.xftxyz.gymadmin.domain.Member;
+import com.xftxyz.gymadmin.domain.*;
 import com.xftxyz.gymadmin.exception.BusinessException;
-import com.xftxyz.gymadmin.mapper.CoachMapper;
-import com.xftxyz.gymadmin.mapper.ConsumeMapper;
-import com.xftxyz.gymadmin.mapper.CourseMapper;
-import com.xftxyz.gymadmin.mapper.MemberMapper;
+import com.xftxyz.gymadmin.mapper.*;
 import com.xftxyz.gymadmin.result.ResultEnum;
 import com.xftxyz.gymadmin.service.CourseService;
 import com.xftxyz.gymadmin.vo.req.BuyCourseReq;
@@ -39,6 +33,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     private final CoachMapper coachMapper;
     private final MemberMapper memberMapper;
     private final ConsumeMapper consumeMapper;
+    private final AdminMapper adminMapper;
 
     @Override
     public Boolean saveCourse(Course course) {
@@ -110,12 +105,17 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size) {
+    public IPage<Course> listCourses(ListCourseReq listCourseReq, Integer current, Integer size, Long userId) {
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getName()), Course::getName, listCourseReq.getName());
         lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getTimeFrame()), Course::getTimeFrame, listCourseReq.getTimeFrame());
 
-        if (!ObjectUtils.isEmpty(listCourseReq.getCoachName())) {
+        Admin admin = adminMapper.selectById(userId);
+        Long coachId = admin.getCoachId();
+        if (!coachId.equals(0L)) {
+            // 非管理员只能查看自己的课程
+            lambdaQueryWrapper.eq(Course::getCoachId, coachId);
+        } else if (!ObjectUtils.isEmpty(listCourseReq.getCoachName())) {
             LambdaQueryWrapper<Coach> coachLambdaQueryWrapper = new LambdaQueryWrapper<>();
             coachLambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getCoachName()), Coach::getName, listCourseReq.getCoachName());
             List<Coach> coaches = coachMapper.selectList(coachLambdaQueryWrapper);
@@ -200,6 +200,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         }
         return true;
 
+    }
+
+    @Override
+    public IPage<Course> listCoursesByCoach(ListCourseReq listCourseReq, Integer current, Integer size, Long coachId) {
+        LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getName()), Course::getName, listCourseReq.getName());
+        lambdaQueryWrapper.like(!ObjectUtils.isEmpty(listCourseReq.getTimeFrame()), Course::getTimeFrame, listCourseReq.getTimeFrame());
+        lambdaQueryWrapper.eq(Course::getCoachId, coachId);
+
+        Page<Course> coursePage = baseMapper.selectPage(new Page<>(current, size), lambdaQueryWrapper);
+        coursePage.getRecords().forEach(this::courseSetCoach);
+        return coursePage;
     }
 }
 

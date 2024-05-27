@@ -4,7 +4,7 @@ const route = [
   {
     path: "/member",
     component: Layout,
-    meta: { title: "会员管理", icon: "Gundamfont icon-shouye" },
+    meta: { title: "会员综合管理", icon: "Gundamfont icon-shouye" },
     children: [
       {
         path: "member",

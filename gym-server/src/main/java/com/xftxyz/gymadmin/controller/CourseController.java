@@ -1,6 +1,7 @@
 package com.xftxyz.gymadmin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xftxyz.gymadmin.config.GymProperties;
 import com.xftxyz.gymadmin.domain.Coach;
 import com.xftxyz.gymadmin.domain.Course;
 import com.xftxyz.gymadmin.domain.Project;
@@ -103,8 +104,9 @@ public class CourseController {
     @PostMapping("/courses")
     public IPage<Course> listCourses(@RequestParam(value = "current", defaultValue = "1") @Min(1) Integer current,
                                      @RequestParam(value = "size", defaultValue = "20") @Min(1) Integer size,
-                                     @RequestBody ListCourseReq listCourseReq) {
-        return courseService.listCourses(listCourseReq, current, size);
+                                     @RequestBody ListCourseReq listCourseReq,
+                                     @RequestAttribute(GymProperties.USER_ID) @NotNull Long userId) {
+        return courseService.listCourses(listCourseReq, current, size, userId);
     }
 
     // 获取课程列表

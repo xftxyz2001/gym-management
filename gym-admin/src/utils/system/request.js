@@ -50,7 +50,7 @@ service.interceptors.response.use(
 // 错误处理
 function showError(error) {
   // token过期，清除本地数据，并跳转至登录页面
-  if (error.code === 301) {
+  if (error.code === 101) {
     // to re-login
     store.dispatch("user/loginOut");
   }

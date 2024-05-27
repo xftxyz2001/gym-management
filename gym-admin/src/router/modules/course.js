@@ -4,7 +4,7 @@ const route = [
   {
     path: "/course",
     component: Layout,
-    meta: { title: "课程管理", icon: "Gundamfont icon-bianjixunlianxiangmu" },
+    meta: { title: "课程综合管理", icon: "Gundamfont icon-bianjixunlianxiangmu" },
     children: [
       {
         path: "project",
